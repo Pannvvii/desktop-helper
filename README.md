@@ -5,7 +5,7 @@ Brightspace Team 6
 Members: <br>
 Pierre Allard 300102131<br>
 Taha Talha 300264187
-Yassine Chaouch 300219230
+<br> Yassine Chaouch 300219230 <br>
 
 Repository Link:<br>
 https://github.com/Pannvvii/desktop-helper
