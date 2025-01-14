@@ -3,7 +3,7 @@
 Brightspace Team 6 
 
 Members: <br>
-Pierre Allard 300102131
+Pierre Allard 300102131<br>
 Taha Talha 300264187
 
 Repository Link:<br>
