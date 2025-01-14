@@ -4,6 +4,7 @@ Brightspace Team 6
 
 Members: <br>
 Pierre Allard 300102131
+Taha Talha 300264187
 
 Repository Link:<br>
 https://github.com/Pannvvii/desktop-helper
