@@ -3,9 +3,9 @@
 Brightspace Team 6 
 
 Members: <br>
-Pierre Allard 300102131<br>
-Taha Talha 300264187
-<br> Yassine Chaouch 300219230 <br>
+Pierre Allard 300102131 palla036@uottawa.ca<br>
+Taha Talha 300264187 ttalh092@uottawa.ca<br>
+Yassine Chaouch 300219230 ychao035@uottawa.ca<br>
 
 Repository Link:<br>
 https://github.com/Pannvvii/desktop-helper
