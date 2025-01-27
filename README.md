@@ -23,7 +23,7 @@ The desktop aid is an application layered on top of a desktop that helps users w
 Personal task list local storage with names, descriptions, and due dates<br>
 Interactive desktop element capable of referencing task list<br>
 UI capable of adding removing, and editing tasks<br>
-Integration with (insert calendar app) capable of automatically populating the task list<br>
+Integration with either google calendar (ideal) or windows integrated calendar (fallback) capable of automatically populating the task list<br>
 
 # Expected/Anticipated Architecture
 C# .Net<br>
