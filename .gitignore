@@ -1,0 +1,12 @@
+# Ignore Visual Studio files
+bin/
+obj/
+.vs/
+*.suo
+*.user
+*.cache
+*.pdb
+*.log
+*.tlog
+*.ilk
+packages/
