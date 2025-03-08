@@ -15,14 +15,14 @@ namespace DesktopHelper.Models.Services
             if (!File.Exists(_filePath))
                 return new List<TaskItem>();
 
-            string json = await Task.Run(() => File.ReadAllText(_filePath)); // Workaround for .NET Framework
+            string json = await Task.Run(() => File.ReadAllText(_filePath)); 
             return JsonSerializer.Deserialize<List<TaskItem>>(json) ?? new List<TaskItem>();
         }
 
         public async Task SaveToFileAsync(List<TaskItem> tasks)
         {
             string json = JsonSerializer.Serialize(tasks, new JsonSerializerOptions { WriteIndented = true });
-            await Task.Run(() => File.WriteAllText(_filePath, json)); // Workaround for .NET Framework
+            await Task.Run(() => File.WriteAllText(_filePath, json)); 
         }
 
     }
