@@ -1,5 +1,6 @@
 ﻿using DesktopHelper.ViewModels;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace DesktopHelper.Views
 {
@@ -8,7 +9,15 @@ namespace DesktopHelper.Views
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
+        }
+
+        private void TaskListGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                var viewModel = DataContext as MainViewModel;
+                viewModel?.SaveTasks();
+            }
         }
     }
 }

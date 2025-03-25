@@ -83,18 +83,31 @@
                       ItemsSource="{Binding Tasks}"
                       AutoGenerateColumns="False"
                       CanUserAddRows="False"
+                      IsReadOnly="False"
+                      CellEditEnding="TaskListGrid_CellEditEnding"
                       Height="120"
                       ScrollViewer.CanContentScroll="True"
                       ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Task" Width="*" Binding="{Binding TaskName}"/>
-                    <DataGridTextColumn Header="Due Date" Width="100" Binding="{Binding DueDate}"/>
-                    <DataGridCheckBoxColumn Header="Reminders?" Width="80" Binding="{Binding HasReminder}"/>
+                    <DataGridTextColumn Header="Task" Width="*" Binding="{Binding TaskName, Mode=TwoWay}"/>
+                    <DataGridTemplateColumn Header="Due Date" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding DueDate, StringFormat=d}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding DueDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridCheckBoxColumn Header="Reminders?" Width="80" Binding="{Binding HasReminder, Mode=TwoWay}"/>
                     <DataGridTemplateColumn Header="Actions" Width="100">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Button Content="Edit" Style="{StaticResource SecondaryButtonStyle}"/>
+                                    <Button Content="Edit" Style="{StaticResource EditButtonStyle}"/>
                                     <Button Style="{StaticResource DeleteButtonStyle}" Width="30" Height="30"
                                             Command="{Binding DataContext.DeleteTaskCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                             CommandParameter="{Binding}">

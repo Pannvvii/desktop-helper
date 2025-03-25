@@ -1,4 +1,3 @@
-using DesktopHelper.Models.TaskModels;
 using DesktopHelper.Models.Services;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -17,7 +16,24 @@ namespace DesktopHelper.ViewModels
             get => _tasks;
             set
             {
+                if (_tasks != null)
+                {
+                    foreach (var task in _tasks)
+                    {
+                        task.PropertyChanged -= Task_PropertyChanged;
+                    }
+                }
+
                 _tasks = value;
+
+                if (_tasks != null)
+                {
+                    foreach (var task in _tasks)
+                    {
+                        task.PropertyChanged += Task_PropertyChanged;
+                    }
+                }
+
                 OnPropertyChanged(nameof(Tasks));
             }
         }
@@ -33,7 +49,7 @@ namespace DesktopHelper.ViewModels
             AddTaskCommand = new RelayCommand(AddTask);
             DeleteTaskCommand = new RelayCommand<TaskItem>(DeleteTask, CanDeleteTask);
 
-            LoadTasks();  // ? Load data on startup
+            LoadTasks();  // Load data on startup
         }
 
         private async void LoadTasks()
@@ -47,7 +63,7 @@ namespace DesktopHelper.ViewModels
 
         private void AddTask()
         {
-            var newTask = new TaskItem { TaskName = "New Task", DueDate = "", HasReminder = false };
+            var newTask = new TaskItem { TaskName = "New Task", DueDate = null, HasReminder = false };
             Tasks.Add(newTask);
             SaveTasks();
         }
@@ -61,7 +77,7 @@ namespace DesktopHelper.ViewModels
             }
         }
 
-        private async void SaveTasks()
+        public async void SaveTasks()
         {
             if (Tasks != null)
             {
@@ -70,5 +86,10 @@ namespace DesktopHelper.ViewModels
         }
 
         private bool CanDeleteTask(TaskItem task) => task != null;
+
+        private void Task_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            SaveTasks();
+        }
     }
 }

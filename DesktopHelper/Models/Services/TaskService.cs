@@ -1,8 +1,10 @@
-﻿using DesktopHelper.Models.TaskModels;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using System;
 
 namespace DesktopHelper.Models.Services
 {
@@ -16,12 +18,26 @@ namespace DesktopHelper.Models.Services
                 return new List<TaskItem>();
 
             string json = await Task.Run(() => File.ReadAllText(_filePath));
-            return JsonSerializer.Deserialize<List<TaskItem>>(json) ?? new List<TaskItem>();
+            Debug.WriteLine($"Loaded JSON: {json}");
+
+            var options = new JsonSerializerOptions
+            {
+                Converters = { new CustomDateTimeConverter("yyyy-MM-ddTHH:mm:ss.fffZ") }
+            };
+
+            return JsonSerializer.Deserialize<List<TaskItem>>(json, options) ?? new List<TaskItem>();
         }
 
         public async Task SaveToFileAsync(List<TaskItem> tasks)
         {
-            string json = JsonSerializer.Serialize(tasks, new JsonSerializerOptions { WriteIndented = true });
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                Converters = { new CustomDateTimeConverter("yyyy-MM-ddTHH:mm:ss.fffZ") }
+            };
+
+            string json = JsonSerializer.Serialize(tasks, options);
+            Debug.WriteLine($"Saving JSON: {json}");
             await Task.Run(() => File.WriteAllText(_filePath, json));
         }
 
@@ -58,6 +74,30 @@ namespace DesktopHelper.Models.Services
         {
             var tasks = await LoadFromFileAsync();
             return tasks.Find(t => t.TaskName == taskName);
+        }
+    }
+
+    public class CustomDateTimeConverter : JsonConverter<DateTime?>
+    {
+        private readonly string _dateFormat;
+
+        public CustomDateTimeConverter(string dateFormat)
+        {
+            _dateFormat = dateFormat;
+        }
+
+        public override DateTime? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            if (reader.TokenType == JsonTokenType.String && DateTime.TryParseExact(reader.GetString(), _dateFormat, null, System.Globalization.DateTimeStyles.None, out DateTime date))
+            {
+                return date;
+            }
+            return null;
+        }
+
+        public override void Write(Utf8JsonWriter writer, DateTime? value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value?.ToString(_dateFormat));
         }
     }
 }

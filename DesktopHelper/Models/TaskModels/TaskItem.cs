@@ -1,16 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DesktopHelper.ViewModels;
+using System;
 
-namespace DesktopHelper.Models.TaskModels
+public class TaskItem : BaseViewModel
 {
-    public class TaskItem
+    private string _taskName;
+    private DateTime? _dueDate;
+    private bool _hasReminder;
+
+    public string TaskName
     {
-        public string TaskName { get; set; }
-        public string DueDate { get; set; }
-        public bool HasReminder { get; set; }
+        get => _taskName;
+        set
+        {
+            _taskName = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public DateTime? DueDate
+    {
+        get => _dueDate;
+        set
+        {
+            _dueDate = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool HasReminder
+    {
+        get => _hasReminder;
+        set
+        {
+            _hasReminder = value;
+            OnPropertyChanged();
+        }
     }
 }
-
