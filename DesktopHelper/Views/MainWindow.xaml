@@ -175,7 +175,6 @@
 
             <!-- A small form to accept a Calendar URL for import -->
             <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
-                <!-- Example: binding a label text to a resource or property -->
                 <TextBlock Text="{Binding CalendarUrlLabel}" VerticalAlignment="Center"
                            Margin="0,0,10,0" FontSize="14"/>
                 <TextBox Width="200" VerticalAlignment="Center" Margin="0,0,10,0"
