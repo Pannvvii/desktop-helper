@@ -9,6 +9,8 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using DesktopHelper.ViewModels;
+using System.IO;
+using System.Reflection;
 
 namespace DesktopHelper
 {
@@ -40,7 +42,10 @@ namespace DesktopHelper
             drawFormat.FormatFlags = StringFormatFlags.NoWrap;
 
             //Get PNG for helper, Future versions will swap between multiple for animations.
-            System.Drawing.Image sourceImage = System.Drawing.Image.FromFile(@"C:\Users\pakre\Downloads\uptodate\desktop-helper-savefeature\DesktopHelper\Speech-Bubble-PNG-Clipart.png");
+            Assembly myAssembly = Assembly.GetExecutingAssembly();
+            Stream myStream = myAssembly.GetManifestResourceStream("DesktopHelper.HelperPrograms.Running.Resources.Image1.png");
+            Bitmap bmp = new Bitmap(myStream);
+            System.Drawing.Image sourceImage = bmp;
 
             Rectangle sourceRect = new Rectangle(0, 0, width, height);
 
