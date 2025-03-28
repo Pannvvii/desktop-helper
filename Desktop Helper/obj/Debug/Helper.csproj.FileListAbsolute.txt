@@ -1,7 +1,0 @@
-C:\Users\pakre\Documents\DesktopProject\Helper\Desktop Helper\bin\Debug\Desktop Helper.exe.config
-C:\Users\pakre\Documents\DesktopProject\Helper\Desktop Helper\bin\Debug\Desktop Helper.exe
-C:\Users\pakre\Documents\DesktopProject\Helper\Desktop Helper\bin\Debug\Desktop Helper.pdb
-C:\Users\pakre\Documents\DesktopProject\Helper\Desktop Helper\obj\Debug\Helper.csproj.AssemblyReference.cache
-C:\Users\pakre\Documents\DesktopProject\Helper\Desktop Helper\obj\Debug\Helper.csproj.CoreCompileInputs.cache
-C:\Users\pakre\Documents\DesktopProject\Helper\Desktop Helper\obj\Debug\Desktop Helper.exe
-C:\Users\pakre\Documents\DesktopProject\Helper\Desktop Helper\obj\Debug\Desktop Helper.pdb
