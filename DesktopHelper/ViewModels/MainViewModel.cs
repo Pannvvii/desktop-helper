@@ -20,6 +20,27 @@ namespace DesktopHelper.ViewModels
         // Backing field for the Calendar URL input
         private string _calendarUrl = "";
 
+        // Backing field for enabling/disabling the helper bubble feature
+        private bool _isHelperEnabled = true;
+
+        // Indicates whether the helper feature is enabled (bound to ToggleButton in the UI)
+        // When set, it updates the global flag used by the rendering logic
+        public bool IsHelperEnabled
+        {
+            get => _isHelperEnabled;
+            set
+            {
+                if (_isHelperEnabled != value)
+                {
+                    _isHelperEnabled = value;
+                    OnPropertyChanged();
+
+                    // Update the global helper flag to reflect current toggle state
+                    MainHelper.HelperEnable = _isHelperEnabled;
+                }
+            }
+        }
+
         // The text displayed in the focus timer
         public string TimerDisplay
         {

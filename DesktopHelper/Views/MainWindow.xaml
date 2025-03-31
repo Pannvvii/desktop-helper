@@ -76,8 +76,12 @@
             </GroupBox>
 
             <!-- Toggle switch in the top-right -->
-            <ToggleButton Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right"
-                          Margin="10" IsChecked="True" Style="{StaticResource ToggleSwitchStyle}"/>
+            <ToggleButton Grid.Column="2"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Right"
+                          Margin="10"
+                          IsChecked="{Binding IsHelperEnabled, Mode=TwoWay}"
+                          Style="{StaticResource ToggleSwitchStyle}"/>
         </Grid>
 
         <!-- MIDDLE ROW (TASK LIST + ADD BUTTON) -->

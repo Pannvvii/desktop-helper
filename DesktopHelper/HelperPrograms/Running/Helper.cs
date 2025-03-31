@@ -26,12 +26,12 @@ namespace DesktopHelper
             String drawString = "No Tasks";
 
             if (MainViewModel._tasks != null)   //Gets Task list, currently sets text output of helper to the last listed task
+            {
+                foreach (var task in MainViewModel._tasks)
                 {
-                    foreach (var task in MainViewModel._tasks)
-                    {
-                        drawString = task.TaskName;
-                    }
+                    drawString = task.TaskName;
                 }
+            }
 
             // Create font and brush.
             Font drawFont = new Font("Arial", 16);
@@ -53,11 +53,12 @@ namespace DesktopHelper
             if (MainHelper.HelperEnable == true)
             {
                 graphics.DrawImage(sourceImage, position.X, position.Y, sourceRect, GraphicsUnit.Pixel);
-                graphics.DrawString(drawString, drawFont, drawBrush, position.X+60, position.Y+85, drawFormat);
+                graphics.DrawString(drawString, drawFont, drawBrush, position.X + 60, position.Y + 85, drawFormat);
             }
             else
             {
-                graphics.Clear(Form.ActiveForm.BackColor); //Clear last draw in case of disabled helper
+                // Skip drawing if the helper is disabled
+                return;
             }
         }
     }
