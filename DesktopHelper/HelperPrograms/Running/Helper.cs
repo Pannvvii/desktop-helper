@@ -20,10 +20,20 @@ namespace DesktopHelper
         {
             Graphics graphics = e.Graphics;
 
+            //TODO:
+            //Update point position every tick to move on a set path, change image to one of multiple for animation.
+
             Point position = System.Windows.Forms.Control.MousePosition; // TEMPORARY, sets helper to stay on mouse cursor for testing
             int width = 200;
             int height = 200; // Size of PNG for helper
             String drawString = "No Tasks";
+
+            //TODO:
+            //Create two lists: Tasks due today, and tasks due this week
+            //foreach task look at date, compare to todays date, add them to today or week list
+            //Create Notification Event Variable
+            //When Task time (from both lists) - currtime = certain set of values, change notification event int to the right number
+            //Check notification event number, if not zero display reminder about task
 
             if (MainViewModel._tasks != null)   //Gets Task list, currently sets text output of helper to the last listed task
             {
