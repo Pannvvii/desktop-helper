@@ -150,5 +150,8 @@
   <ItemGroup>
     <EmbeddedResource Include="HelperPrograms\Running\Resources\Image1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="HelperPrograms\Running\Resources\Cat.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
