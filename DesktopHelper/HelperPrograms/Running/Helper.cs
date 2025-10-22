@@ -43,6 +43,7 @@ namespace DesktopHelper
 
             var TaskLWeek = new List<TaskItem> {};
             var TaskLToday = new List<TaskItem> {};
+            var TaskLOverdue = new List<TaskItem> { };
             var storTask = new TaskItem { TaskName = "New Task", DueDate = null, HasReminder = false };
             
 
@@ -73,29 +74,36 @@ namespace DesktopHelper
 
             string reminderTextDay = "You Have the following tasks due today: ";
             string reminderTextWeek = "You Have the following tasks due this week: ";
+            string reminderTextOverdue = "You Have the following tasks overdue (Maybe you forgot to delete?): ";
             
             //drawString = currTask.TaskName;
             if (MainViewModel._tasks != null && dateNow != null && MainHelper.petTime != AppTime)   //Gets Task list, currently sets text output of helper to the last listed task
             {
                 foreach (var currTask in MainViewModel._tasks)
                 {
-                    currTaskDate = currTask.DueDate.Value;
-                    //if (currTask.DueDate >= DateTime.Now)
-                    if (true)
+                    if (currTask.DueDate != null && currTask.TaskName != null)
                     {
-                        Debug.WriteLine("Date of Task: " + currTaskDate.Date);
-                        Debug.WriteLine("Date of Today: " + DateTime.Today);
-                        if (currTaskDate.Date == DateTime.Today)
-                        //if (true)
+                        currTaskDate = currTask.DueDate.Value;
+                        //if (currTask.DueDate >= DateTime.Now)
+                        if (currTask.HasReminder == true)
                         {
-                            TaskLToday.Add(currTask);
-                            Debug.WriteLine("Task Added For Today: " + currTask.TaskName);
-                        } else if (dateNow.Subtract(currTaskDate).TotalDays <= 7)
-                        { 
-                            TaskLWeek.Add(currTask);
-                            Debug.WriteLine("Task Added For This Week: " + currTask.TaskName);
+                            Debug.WriteLine("Task: " + currTask.TaskName);
+                            Debug.WriteLine("Date of Task: " + currTaskDate.Date);
+                            Debug.WriteLine("Date of Today: " + DateTime.Today);
+                            if (currTaskDate.Date == DateTime.Today)
+                            //if (true)
+                            {
+                                TaskLToday.Add(currTask);
+                                Debug.WriteLine("Task Added For Today: " + currTask.TaskName);
+                            }
+                            else if ((dateNow.Subtract(currTaskDate).TotalDays <= 7) && (currTask.DueDate >= DateTime.Now))
+                            {
+                                TaskLWeek.Add(currTask);
+                                Debug.WriteLine("Task Added For This Week: " + currTask.TaskName);
+                            }
                         }
                     }
+                    
                 }
 
                 if (TaskLToday.Any())
@@ -106,6 +114,10 @@ namespace DesktopHelper
                     }
                     reminderTextDay = reminderTextDay.Remove(reminderTextDay.Length - 2);
                 }
+                else
+                {
+                    reminderTextDay = "No tasks due today.";
+                }
 
                 if (TaskLWeek.Any())
                 {
@@ -114,11 +126,23 @@ namespace DesktopHelper
                         reminderTextWeek = reminderTextWeek + notifTask.TaskName + ", ";
                     }
                     reminderTextWeek = reminderTextWeek.Remove(reminderTextWeek.Length - 2);
+                }else
+                {
+                    reminderTextWeek = "No other tasks due this week.";
+                }
+                if (TaskLOverdue.Any())
+                {
+                    foreach (var notifTask in TaskLOverdue)
+                    {
+                        reminderTextOverdue = reminderTextOverdue + notifTask.TaskName + ", ";
+                    }
+                    reminderTextOverdue = reminderTextOverdue.Remove(reminderTextOverdue.Length - 2);
                 }
 
-                
 
-            }else if (MainViewModel._tasks == null)
+
+            }
+            else if (MainViewModel._tasks == null)
             {
                 MainHelper.drawString = "No Tasks!";
                 MainHelper.isbubble = false;
@@ -344,6 +368,7 @@ namespace DesktopHelper
                     RectangleF textRect = new RectangleF(position.X - 55, originY+padding, maxWidth, measuredSize.Height);
 
                     //graphics.DrawString(MainHelper.drawString, drawFont, drawBrush, position.X + 55, position.Y + 70, drawFormat);
+                    graphics.FillPolygon(System.Drawing.Brushes.White, new System.Drawing.Point[] { new System.Drawing.Point(position.X + 200, position.Y+0), new System.Drawing.Point(position.X+100, position.Y+0), new System.Drawing.Point(position.X + 200, position.Y+40) });
                     graphics.DrawString(MainHelper.drawString, drawFont, drawBrush, textRect, format);
                 }
             }

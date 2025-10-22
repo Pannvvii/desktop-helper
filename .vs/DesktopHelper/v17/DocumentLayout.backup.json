@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\pakre\\OneDrive\\Documents\\GitHub\\desktop-helper\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{4D79E320-42B9-4972-8F06-204F63E62BB7}|DesktopHelper\\DesktopHelper.csproj|C:\\Users\\pakre\\OneDrive\\Documents\\GitHub\\desktop-helper\\desktophelper\\helperprograms\\mainhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D79E320-42B9-4972-8F06-204F63E62BB7}|DesktopHelper\\DesktopHelper.csproj|solutionrelative:desktophelper\\helperprograms\\mainhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{4D79E320-42B9-4972-8F06-204F63E62BB7}|DesktopHelper\\DesktopHelper.csproj|c:\\users\\pakre\\onedrive\\documents\\github\\desktop-helper\\desktophelper\\helperprograms\\running\\helper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4D79E320-42B9-4972-8F06-204F63E62BB7}|DesktopHelper\\DesktopHelper.csproj|solutionrelative:desktophelper\\helperprograms\\running\\helper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4D79E320-42B9-4972-8F06-204F63E62BB7}|DesktopHelper\\DesktopHelper.csproj|C:\\Users\\pakre\\OneDrive\\Documents\\GitHub\\desktop-helper\\desktophelper\\helperprograms\\mainhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4D79E320-42B9-4972-8F06-204F63E62BB7}|DesktopHelper\\DesktopHelper.csproj|solutionrelative:desktophelper\\helperprograms\\mainhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4D79E320-42B9-4972-8F06-204F63E62BB7}|DesktopHelper\\DesktopHelper.csproj|C:\\Users\\pakre\\OneDrive\\Documents\\GitHub\\desktop-helper\\desktophelper\\helperprograms\\running\\time.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D79E320-42B9-4972-8F06-204F63E62BB7}|DesktopHelper\\DesktopHelper.csproj|solutionrelative:desktophelper\\helperprograms\\running\\time.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4D79E320-42B9-4972-8F06-204F63E62BB7}|DesktopHelper\\DesktopHelper.csproj|C:\\Users\\pakre\\OneDrive\\Documents\\GitHub\\desktop-helper\\desktophelper\\helperprograms\\bufferedpanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -27,10 +31,6 @@
       "RelativeMoniker": "D:0:0:{4D79E320-42B9-4972-8F06-204F63E62BB7}|DesktopHelper\\DesktopHelper.csproj|solutionrelative:desktophelper\\helperprograms\\helperwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4D79E320-42B9-4972-8F06-204F63E62BB7}|DesktopHelper\\DesktopHelper.csproj|C:\\Users\\pakre\\OneDrive\\Documents\\GitHub\\desktop-helper\\desktophelper\\helperprograms\\running\\time.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4D79E320-42B9-4972-8F06-204F63E62BB7}|DesktopHelper\\DesktopHelper.csproj|solutionrelative:desktophelper\\helperprograms\\running\\time.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{4D79E320-42B9-4972-8F06-204F63E62BB7}|DesktopHelper\\DesktopHelper.csproj|C:\\Users\\pakre\\OneDrive\\Documents\\GitHub\\desktop-helper\\desktophelper\\views\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4D79E320-42B9-4972-8F06-204F63E62BB7}|DesktopHelper\\DesktopHelper.csproj|solutionrelative:desktophelper\\views\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -42,11 +42,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "HelperWindow.cs",
               "DocumentMoniker": "C:\\Users\\pakre\\OneDrive\\Documents\\GitHub\\desktop-helper\\DesktopHelper\\HelperPrograms\\HelperWindow.cs",
               "RelativeDocumentMoniker": "DesktopHelper\\HelperPrograms\\HelperWindow.cs",
@@ -58,32 +58,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Helper.cs",
               "DocumentMoniker": "C:\\Users\\pakre\\OneDrive\\Documents\\GitHub\\desktop-helper\\DesktopHelper\\HelperPrograms\\Running\\Helper.cs",
               "RelativeDocumentMoniker": "DesktopHelper\\HelperPrograms\\Running\\Helper.cs",
               "ToolTip": "C:\\Users\\pakre\\OneDrive\\Documents\\GitHub\\desktop-helper\\DesktopHelper\\HelperPrograms\\Running\\Helper.cs",
               "RelativeToolTip": "DesktopHelper\\HelperPrograms\\Running\\Helper.cs",
-              "ViewState": "AgIAAEIAAAAAAAAAAAApwFMAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAACYAAAAAAAAAAAApwFMAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-28T01:00:38.988Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "MainHelper.cs",
               "DocumentMoniker": "C:\\Users\\pakre\\OneDrive\\Documents\\GitHub\\desktop-helper\\DesktopHelper\\HelperPrograms\\MainHelper.cs",
               "RelativeDocumentMoniker": "DesktopHelper\\HelperPrograms\\MainHelper.cs",
               "ToolTip": "C:\\Users\\pakre\\OneDrive\\Documents\\GitHub\\desktop-helper\\DesktopHelper\\HelperPrograms\\MainHelper.cs",
               "RelativeToolTip": "DesktopHelper\\HelperPrograms\\MainHelper.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAgwBIAAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-28T00:37:48.72Z"
+              "WhenOpened": "2025-03-28T00:37:48.72Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\pakre\\OneDrive\\Documents\\GitHub\\desktop-helper\\DesktopHelper\\Views\\MainWindow.xaml",
               "RelativeDocumentMoniker": "DesktopHelper\\Views\\MainWindow.xaml",
@@ -94,7 +95,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "BufferedPanel.cs",
               "DocumentMoniker": "C:\\Users\\pakre\\OneDrive\\Documents\\GitHub\\desktop-helper\\DesktopHelper\\HelperPrograms\\BufferedPanel.cs",
               "RelativeDocumentMoniker": "DesktopHelper\\HelperPrograms\\BufferedPanel.cs",
@@ -118,19 +119,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 2,
               "Title": "Time.cs",
               "DocumentMoniker": "C:\\Users\\pakre\\OneDrive\\Documents\\GitHub\\desktop-helper\\DesktopHelper\\HelperPrograms\\Running\\Time.cs",
               "RelativeDocumentMoniker": "DesktopHelper\\HelperPrograms\\Running\\Time.cs",
               "ToolTip": "C:\\Users\\pakre\\OneDrive\\Documents\\GitHub\\desktop-helper\\DesktopHelper\\HelperPrograms\\Running\\Time.cs",
               "RelativeToolTip": "DesktopHelper\\HelperPrograms\\Running\\Time.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAATAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-28T01:00:25.632Z"
+              "WhenOpened": "2025-03-28T01:00:25.632Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "MainViewModel.cs",
               "DocumentMoniker": "C:\\Users\\pakre\\OneDrive\\Documents\\GitHub\\desktop-helper\\DesktopHelper\\ViewModels\\MainViewModel.cs",
               "RelativeDocumentMoniker": "DesktopHelper\\ViewModels\\MainViewModel.cs",
