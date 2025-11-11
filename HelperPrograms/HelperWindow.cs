@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
@@ -10,7 +11,7 @@ namespace DesktopHelper
 {
     //START HERE FOR ON SCREEN HELPER CODE
     
-    internal static class HelperWindow
+    internal class HelperWindow
     {
         [DllImport("user32.dll", SetLastError = true)]
         private static extern uint GetWindowLong(IntPtr hWnd, int nIndex);
@@ -47,10 +48,12 @@ namespace DesktopHelper
             HelperWindow.canvas.BringToFront();
             HelperWindow.canvas.Paint += HelperWindow.Render;
             HelperWindow.helperForm.Controls.Add(HelperWindow.canvas);
+            //HelperWindow.OnClick(EventArgs e);
 
             Application.Idle += HelperWindow.HandleIdle;
             Application.EnableVisualStyles();
             Application.Run(HelperWindow.helperForm);
+            
         }
 
         //Match window size to screen
@@ -81,7 +84,8 @@ namespace DesktopHelper
                 Thread.Sleep(8);
             }
        }
-        
+
+
         //First Call to MainHelper.cs after finishing setup of Form, starts displaying helper.
         private static void Render(object sender, PaintEventArgs e)
         {
