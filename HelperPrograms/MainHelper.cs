@@ -20,8 +20,16 @@ namespace DesktopHelper
 
         public static List<TaskItem> oldList = new List<TaskItem> { };
 
+        public static List<TaskItem> timeNotifQLong = new List<TaskItem> { };
+        public static List<TaskItem> timeNotifQShort = new List<TaskItem> { };
+        public static List<TaskItem> timeNotifQZero = new List<TaskItem> { };
+        public static List<TaskItem> timeNotifQLongFinished = new List<TaskItem> { };
+        public static List<TaskItem> timeNotifQShortFinished = new List<TaskItem> { };
+        public static List<TaskItem> timeNotifQZeroFinished = new List<TaskItem> { };
+
         public static int congratulateFlag = 0;
         public static int congratulateActive = 0;
+        public static int timeNotifActive = 0;
         public static int reminderInterval = 15;
         public static int needNotifFlag = 0;
         public static int notifLength = 15;
@@ -49,5 +57,7 @@ namespace DesktopHelper
             Time.TickTime(); // Currently Unused, calls Time.cs for future features to check how long it has been since last reminder.
             Helper.Render(e);
         }
+
     }
+
 }

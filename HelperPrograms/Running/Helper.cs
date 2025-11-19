@@ -22,12 +22,17 @@ namespace DesktopHelper
 {
     class Helper
     {
+
         public static void Render(PaintEventArgs e)
         {
             Graphics graphics = e.Graphics;
 
             //int AppTime = (int)Math.Floor(Time.time);
             double AppTime = Math.Round(Time.time, 1);
+
+            TimeSpan spanShort = TimeSpan.FromMinutes(10);
+            TimeSpan spanLong = TimeSpan.FromHours(1);
+            TimeSpan spanZero = TimeSpan.FromMinutes(0);
 
 
             //Time for Pet update
@@ -43,6 +48,8 @@ namespace DesktopHelper
                 DateTime dateNow = DateTime.Now;
                 DateTime currTaskDate = DateTime.MinValue;
                 DateTime NextDue = DateTime.MinValue;
+                DateTime nowTruncated = DateTime.MinValue;
+
 
                 string reminderTextDay = "You Have the following tasks due today: ";
                 string reminderTextWeek = "You Have the following tasks due this week: ";
@@ -69,6 +76,30 @@ namespace DesktopHelper
                                 {
                                     TaskLToday.Add(currTask);
                                     Debug.WriteLine("Task Added For Today: " + currTask.Name);
+
+                                    currTaskDate = currTaskDate.AddTicks(-(currTaskDate.Ticks % TimeSpan.TicksPerSecond));
+                                    nowTruncated = DateTime.Now.AddTicks(-(DateTime.Now.Ticks % TimeSpan.TicksPerSecond));
+
+                                    if (currTaskDate.TimeOfDay - nowTruncated.TimeOfDay <= spanZero)
+                                    {
+                                        if (!MainHelper.timeNotifQZero.Contains(currTask) && !MainHelper.timeNotifQZeroFinished.Contains(currTask))
+                                        {
+                                            MainHelper.timeNotifQZero.Add(currTask);
+                                        }
+                                    } else if (currTaskDate.TimeOfDay - nowTruncated.TimeOfDay <= spanShort)
+                                    {
+                                        if (!MainHelper.timeNotifQShort.Contains(currTask) && !MainHelper.timeNotifQShortFinished.Contains(currTask))
+                                        {
+                                            MainHelper.timeNotifQShort.Add(currTask);
+                                        }
+                                    } else if (currTaskDate.TimeOfDay - nowTruncated.TimeOfDay <= spanLong)
+                                    {
+                                        if (!MainHelper.timeNotifQLong.Contains(currTask) && !MainHelper.timeNotifQLongFinished.Contains(currTask))
+                                        {
+                                            MainHelper.timeNotifQLong.Add(currTask);
+                                        }
+                                    }
+
                                 }
                                 else if ((dateNow.Subtract(currTaskDate).TotalDays <= 7) && (currTask.DueDate >= DateTime.Now))
                                 {
@@ -182,7 +213,7 @@ namespace DesktopHelper
                         }
                     }
                     //Pet is idle and notification flag is active
-                    else if (MainHelper.needNotifFlag == 2 && MainHelper.petStatus == "Idle" && MainHelper.congratulateActive == 0)
+                    else if (MainHelper.needNotifFlag == 2 && MainHelper.petStatus == "Idle" && MainHelper.congratulateActive == 0 && MainHelper.timeNotifActive == 0)
                     {
                         //Grab attention notification
                         if (MainHelper.notifLength != 0)
@@ -211,7 +242,8 @@ namespace DesktopHelper
                             MainHelper.notifLength = 5;
                         }
                     }
-                    else if (MainHelper.needNotifFlag == 1 && MainHelper.congratulateFlag == 1)
+                    //Notification is not active and Task complete congratulate is flagged
+                    else if (MainHelper.needNotifFlag == 1 && MainHelper.congratulateFlag == 1 && MainHelper.timeNotifActive == 0)
                     {
                         //Grab attention notification
                         MainHelper.congratulateActive = 1;
@@ -230,10 +262,90 @@ namespace DesktopHelper
                         else if (MainHelper.notifLength == 0)
                         {
                             MainHelper.congratulateFlag = 0;
-                            MainHelper.notifLength = 5;
+                            MainHelper.notifLength = 15;
                             MainHelper.congratulateActive = 0;
                         }
+                    } 
+                    //Time remaining for at least one task has reached the threshold
+                    else if (MainHelper.timeNotifQZero.Any() || MainHelper.timeNotifQShort.Any()  || MainHelper.timeNotifQLong.Any() || MainHelper.timeNotifActive != 0)
+                    {
+
+                        if (MainHelper.timeNotifQZero.Any() || MainHelper.timeNotifActive == 1)
+                        {
+                            MainHelper.timeNotifActive = 1;
+                            //Grab attention notification
+                            if (MainHelper.notifLength != 0)
+                            {
+                                MainHelper.isbubble = true;
+                                if (MainHelper.notifLength > 0)
+                                {
+                                    MainHelper.drawString = "Task Past Due: "+ MainHelper.timeNotifQZero[0].Name;
+                                }
+                                if (MainHelper.notifLength > 0)
+                                {
+                                    MainHelper.notifLength--;
+                                }
+                            }
+                            else if (MainHelper.notifLength == 0)
+                            {
+                                MainHelper.timeNotifActive = 0;
+                                MainHelper.notifLength = 15;
+                                MainHelper.timeNotifQZeroFinished.Add(MainHelper.timeNotifQZero[0]);
+                                MainHelper.timeNotifQZero.RemoveAt(0);
+                            }
+                        }
+                        else if (MainHelper.timeNotifQShort.Any() || MainHelper.timeNotifActive == 2)
+                        {
+                            MainHelper.timeNotifActive = 2;
+                            //Grab attention notification
+                            MainHelper.congratulateActive = 1;
+                            if (MainHelper.notifLength != 0)
+                            {
+                                MainHelper.isbubble = true;
+                                if (MainHelper.notifLength > 0)
+                                {
+                                    MainHelper.drawString = "task Due in 10 Minutes: "+ MainHelper.timeNotifQShort[0].Name;
+                                }
+                                if (MainHelper.notifLength > 0)
+                                {
+                                    MainHelper.notifLength--;
+                                }
+                            }
+                            else if (MainHelper.notifLength == 0)
+                            {
+                                MainHelper.timeNotifActive = 0;
+                                MainHelper.notifLength = 15;
+                                MainHelper.timeNotifQShortFinished.Add(MainHelper.timeNotifQShort[0]);
+                                MainHelper.timeNotifQShort.RemoveAt(0);
+                            }
+                        }
+                        else if (MainHelper.timeNotifQLong.Any() || MainHelper.timeNotifActive == 3)
+                        {
+                            MainHelper.timeNotifActive = 3;
+                            //Grab attention notification
+                            MainHelper.congratulateActive = 1;
+                            if (MainHelper.notifLength != 0)
+                            {
+                                MainHelper.isbubble = true;
+                                if (MainHelper.notifLength > 0)
+                                {
+                                    MainHelper.drawString = "Task Due in an Hour: " + MainHelper.timeNotifQLong[0].Name;
+                                }
+                                if (MainHelper.notifLength > 0)
+                                {
+                                    MainHelper.notifLength--;
+                                }
+                            }
+                            else if (MainHelper.notifLength == 0)
+                            {
+                                MainHelper.timeNotifActive = 0;
+                                MainHelper.notifLength = 15;
+                                MainHelper.timeNotifQLongFinished.Add(MainHelper.timeNotifQLong[0]);
+                                MainHelper.timeNotifQLong.RemoveAt(0);
+                            }
+                        }
                     }
+                    //No notif, check if the notification inverval has passed.
                     else if (MainHelper.needNotifFlag == 1)
                     {
                         MainHelper.isbubble = false;
@@ -244,7 +356,7 @@ namespace DesktopHelper
                     }
 
                     //Pet chance to start moving if idle and no notifications
-                    if ((MainHelper.petStatus == "Idle") && (MainHelper.needNotifFlag == 1) && (MainHelper.congratulateActive == 0))
+                    if ((MainHelper.petStatus == "Idle") && (MainHelper.needNotifFlag == 1) && (MainHelper.congratulateActive == 0) && (MainHelper.timeNotifActive == 0))
                     {
                         int rndResult = 0;
                         rndResult = MainHelper.rnd.Next(1, 14);
