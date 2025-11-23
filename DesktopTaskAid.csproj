@@ -1,0 +1,60 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>DesktopTaskAid</AssemblyName>
+    <RootNamespace>DesktopTaskAid</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Apis.Calendar.v3" Version="1.69.0.3746" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.72.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="assets\images\sticker-light.png" />
+    <Resource Include="assets\images\sticker-dark.png" />
+    <Resource Include="assets\icons\**\*.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="HelperPrograms\Running\Resources\Cat.png" />
+    <None Remove="HelperPrograms\Running\Resources\Cat2.png" />
+    <None Remove="HelperPrograms\Running\Resources\Idle1.png" />
+    <None Remove="HelperPrograms\Running\Resources\Idle2.png" />
+    <None Remove="HelperPrograms\Running\Resources\Idle3.png" />
+    <None Remove="HelperPrograms\Running\Resources\Idle4.png" />
+    <None Remove="HelperPrograms\Running\Resources\Image1.png" />
+    <None Remove="HelperPrograms\Running\Resources\Left1.png" />
+    <None Remove="HelperPrograms\Running\Resources\Left2.png" />
+    <None Remove="HelperPrograms\Running\Resources\Left3.png" />
+    <None Remove="HelperPrograms\Running\Resources\Left4.png" />
+    <None Remove="HelperPrograms\Running\Resources\Right1.png" />
+    <None Remove="HelperPrograms\Running\Resources\Right2.png" />
+    <None Remove="HelperPrograms\Running\Resources\Right3.png" />
+    <None Remove="HelperPrograms\Running\Resources\Right4.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="HelperPrograms\Running\Resources\Idle1.png" />
+    <EmbeddedResource Include="HelperPrograms\Running\Resources\Idle2.png" />
+    <EmbeddedResource Include="HelperPrograms\Running\Resources\Idle3.png" />
+    <EmbeddedResource Include="HelperPrograms\Running\Resources\Idle4.png" />
+    <EmbeddedResource Include="HelperPrograms\Running\Resources\Left1.png" />
+    <EmbeddedResource Include="HelperPrograms\Running\Resources\Left2.png" />
+    <EmbeddedResource Include="HelperPrograms\Running\Resources\Left3.png" />
+    <EmbeddedResource Include="HelperPrograms\Running\Resources\Left4.png" />
+    <EmbeddedResource Include="HelperPrograms\Running\Resources\Right1.png" />
+    <EmbeddedResource Include="HelperPrograms\Running\Resources\Right2.png" />
+    <EmbeddedResource Include="HelperPrograms\Running\Resources\Right3.png" />
+    <EmbeddedResource Include="HelperPrograms\Running\Resources\Right4.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+
+</Project>
