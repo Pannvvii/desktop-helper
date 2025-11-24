@@ -620,6 +620,9 @@
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter TargetName="hoverBorder" Property="Background" Value="{DynamicResource AccentSoft}"/>
                                             </Trigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter TargetName="hoverBorder" Property="Background" Value="{DynamicResource AccentSoft}"/>
+                                            </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Setter.Value>
@@ -635,7 +638,7 @@
                 </Button>
                 <Border Height="1" Background="{DynamicResource Border}" Margin="12,0"/>
                 <Button Width="48" Height="47" Background="Transparent" BorderThickness="0"
-                        Command="{Binding ImportNextMonthCommand}" ToolTip="Import next month from Google Calendar"
+                        Command="{Binding ToggleOptionsMenuCommand}" ToolTip="Options"
                         FocusVisualStyle="{x:Null}">
                     <Button.Style>
                         <Style TargetType="Button">
@@ -645,7 +648,7 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="Button">
-                                        <Border x:Name="hoverBorder" Background="{TemplateBinding Background}" CornerRadius="24">
+                                        <Border x:Name="hoverBorder" Background="Transparent" CornerRadius="24">
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <ControlTemplate.Triggers>
@@ -665,6 +668,85 @@
                         </Canvas>
                     </Viewbox>
                 </Button>
+            </StackPanel>
+        </Border>
+
+        <!-- Options Menu Popup -->
+        <Border Background="{DynamicResource Surface}" BorderBrush="{DynamicResource Border}" 
+                BorderThickness="1" CornerRadius="16" Width="200" Height="Auto"
+                VerticalAlignment="Top" HorizontalAlignment="Left" Margin="90,80,0,0" Panel.ZIndex="10"
+                Visibility="{Binding IsOptionsMenuOpen, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Border.Effect>
+                <DropShadowEffect Color="Black" BlurRadius="20" ShadowDepth="4" Opacity="0.15"/>
+            </Border.Effect>
+            <StackPanel Margin="16,14,16,14">
+                <!-- Drag Window Option -->
+                <Grid Margin="0,0,0,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <CheckBox Grid.Column="0" IsChecked="{Binding IsDragWindowEnabled}" 
+                              VerticalAlignment="Center" Margin="0,0,10,0"
+                              FocusVisualStyle="{x:Null}" Cursor="Hand">
+                        <CheckBox.Template>
+                            <ControlTemplate TargetType="CheckBox">
+                                <Border x:Name="CheckBorder" Width="24" Height="24" CornerRadius="6" 
+                                        Background="Transparent" 
+                                        BorderBrush="{DynamicResource Border}" BorderThickness="2">
+                                    <Path x:Name="CheckMark" Data="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" 
+                                          Fill="{DynamicResource Accent}" Stretch="Uniform" Width="16" Height="16"
+                                          HorizontalAlignment="Center" VerticalAlignment="Center"
+                                          Visibility="Collapsed"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsChecked" Value="True">
+                                        <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
+                                        <Setter TargetName="CheckBorder" Property="BorderBrush" Value="{DynamicResource Accent}"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </CheckBox.Template>
+                    </CheckBox>
+                    
+                    <TextBlock Grid.Column="1" Text="Drag Window" FontSize="14" 
+                               Foreground="{DynamicResource TextPrimary}" VerticalAlignment="Center"/>
+                </Grid>
+                
+                <!-- Pull Mouse Option -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <CheckBox Grid.Column="0" IsChecked="{Binding IsPullMouseEnabled}" 
+                              VerticalAlignment="Center" Margin="0,0,10,0"
+                              FocusVisualStyle="{x:Null}" Cursor="Hand">
+                        <CheckBox.Template>
+                            <ControlTemplate TargetType="CheckBox">
+                                <Border x:Name="CheckBorder" Width="24" Height="24" CornerRadius="6" 
+                                        Background="Transparent" 
+                                        BorderBrush="{DynamicResource Border}" BorderThickness="2">
+                                    <Path x:Name="CheckMark" Data="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" 
+                                          Fill="{DynamicResource Accent}" Stretch="Uniform" Width="16" Height="16"
+                                          HorizontalAlignment="Center" VerticalAlignment="Center"
+                                          Visibility="Collapsed"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsChecked" Value="True">
+                                        <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
+                                        <Setter TargetName="CheckBorder" Property="BorderBrush" Value="{DynamicResource Accent}"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </CheckBox.Template>
+                    </CheckBox>
+                    
+                    <TextBlock Grid.Column="1" Text="Pull mouse" FontSize="14" 
+                               Foreground="{DynamicResource TextPrimary}" VerticalAlignment="Center"/>
+                </Grid>
             </StackPanel>
         </Border>
 
@@ -728,7 +810,8 @@
 
                             <StackPanel Grid.Column="2">
                                 <TextBlock Text="Time" FontSize="13" Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,8"/>
-                                <TextBox Height="44" Text="09:00"
+                                <TextBox Height="44" 
+                                         Text="{Binding EditingTask.DueTime, Converter={StaticResource TimeSpanToStringConverter}, UpdateSourceTrigger=PropertyChanged}"
                                          Background="{DynamicResource Surface}" 
                                          Foreground="{DynamicResource TextPrimary}"
                                          BorderBrush="{DynamicResource Border}" BorderThickness="1"

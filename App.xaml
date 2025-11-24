@@ -12,6 +12,7 @@
             <!-- Converters -->
             <converters:DateFormatConverter x:Key="DateFormatConverter"/>
             <converters:TimeFormatConverter x:Key="TimeFormatConverter"/>
+            <converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
             <converters:ReminderStatusToBrushConverter x:Key="ReminderStatusToBrushConverter"/>
             <converters:ReminderStatusToTextColorConverter x:Key="ReminderStatusToTextColorConverter"/>
             <converters:SecondsToTimerDisplayConverter x:Key="SecondsToTimerDisplayConverter"/>

@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="HelperPrograms\Running\Resources\Border.png" />
     <None Remove="HelperPrograms\Running\Resources\Cat.png" />
     <None Remove="HelperPrograms\Running\Resources\Cat2.png" />
     <None Remove="HelperPrograms\Running\Resources\Idle1.png" />
@@ -32,25 +33,29 @@
     <None Remove="HelperPrograms\Running\Resources\Left2.png" />
     <None Remove="HelperPrograms\Running\Resources\Left3.png" />
     <None Remove="HelperPrograms\Running\Resources\Left4.png" />
+    <None Remove="HelperPrograms\Running\Resources\Left5.png" />
     <None Remove="HelperPrograms\Running\Resources\Right1.png" />
     <None Remove="HelperPrograms\Running\Resources\Right2.png" />
     <None Remove="HelperPrograms\Running\Resources\Right3.png" />
     <None Remove="HelperPrograms\Running\Resources\Right4.png" />
+    <None Remove="HelperPrograms\Running\Resources\Right5.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="HelperPrograms\Running\Resources\Border.png" />
     <EmbeddedResource Include="HelperPrograms\Running\Resources\Idle1.png" />
     <EmbeddedResource Include="HelperPrograms\Running\Resources\Idle2.png" />
     <EmbeddedResource Include="HelperPrograms\Running\Resources\Idle3.png" />
-    <EmbeddedResource Include="HelperPrograms\Running\Resources\Idle4.png" />
     <EmbeddedResource Include="HelperPrograms\Running\Resources\Left1.png" />
     <EmbeddedResource Include="HelperPrograms\Running\Resources\Left2.png" />
     <EmbeddedResource Include="HelperPrograms\Running\Resources\Left3.png" />
     <EmbeddedResource Include="HelperPrograms\Running\Resources\Left4.png" />
+    <EmbeddedResource Include="HelperPrograms\Running\Resources\Left5.png" />
     <EmbeddedResource Include="HelperPrograms\Running\Resources\Right1.png" />
     <EmbeddedResource Include="HelperPrograms\Running\Resources\Right2.png" />
     <EmbeddedResource Include="HelperPrograms\Running\Resources\Right3.png" />
     <EmbeddedResource Include="HelperPrograms\Running\Resources\Right4.png" />
+    <EmbeddedResource Include="HelperPrograms\Running\Resources\Right5.png" />
   </ItemGroup>
 
   <ItemGroup>

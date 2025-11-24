@@ -12,6 +12,7 @@ using DesktopTaskAid.Helpers;
 using DesktopTaskAid.Models;
 using DesktopTaskAid.Services;
 using Microsoft.Win32;
+using DesktopHelper;
 
 namespace DesktopTaskAid.ViewModels
 {
@@ -233,7 +234,6 @@ namespace DesktopTaskAid.ViewModels
             {
                 if (SetProperty(ref _isImportRunning, value))
                 {
-                    _importNextMonthCommand?.RaiseCanExecuteChanged();
                     _openImportModalCommand?.RaiseCanExecuteChanged();
                 }
             }
@@ -245,10 +245,7 @@ namespace DesktopTaskAid.ViewModels
             get => _hasValidCredentials;
             private set
             {
-                if (SetProperty(ref _hasValidCredentials, value))
-                {
-                    _importNextMonthCommand?.RaiseCanExecuteChanged();
-                }
+                SetProperty(ref _hasValidCredentials, value);
             }
         }
 
@@ -258,6 +255,36 @@ namespace DesktopTaskAid.ViewModels
             get => _isCalendarImportModalOpen;
             set => SetProperty(ref _isCalendarImportModalOpen, value);
         }
+
+        private bool _isOptionsMenuOpen;
+        public bool IsOptionsMenuOpen
+        {
+            get => _isOptionsMenuOpen;
+            set => SetProperty(ref _isOptionsMenuOpen, value);
+        }
+
+        private bool _isDragWindowEnabled = true;
+        public bool IsDragWindowEnabled
+        {
+            get => _isDragWindowEnabled;
+            set
+            {
+                SetProperty(ref _isDragWindowEnabled, value);
+                MainHelper.DragWindowEnabled = value; // Sync with global helper setting
+            }
+        }
+
+        private bool _isPullMouseEnabled = true;
+        public bool IsPullMouseEnabled
+        {
+            get => _isPullMouseEnabled;
+            set
+            {
+                SetProperty(ref _isPullMouseEnabled, value);
+                MainHelper.PullMouseEnabled = value; // Sync with global helper setting
+            }
+        }
+
 
         #endregion
 
@@ -280,6 +307,7 @@ namespace DesktopTaskAid.ViewModels
         public ICommand CreateGoogleAccountCommand { get; }
         public ICommand OpenCalendarImportModalCommand => _openImportModalCommand;
         public ICommand CloseCalendarImportModalCommand { get; }
+        public ICommand ToggleOptionsMenuCommand { get; }
 
         #endregion
 
@@ -297,6 +325,9 @@ namespace DesktopTaskAid.ViewModels
                 LoggingService.Log("Loading application state");
                 _state = _storageService.LoadState();
                 LoggingService.Log($"State loaded - Tasks count: {_state?.Tasks?.Count ?? 0}");
+
+                // Refresh daily timer tracking to reset counter on new days
+                _state.Timer?.RefreshDailyTracking();
 
                 // Initialize collections
                 LoggingService.Log("Initializing collections");
@@ -336,9 +367,10 @@ namespace DesktopTaskAid.ViewModels
                 PreviousPageCommand = new RelayCommand(_ => ChangePage(-1), _ => CurrentPage > 1);
                 NextPageCommand = new RelayCommand(_ => ChangePage(1), _ => CanGoNextPage());
                 _openImportModalCommand = new RelayCommand(_ => OpenCalendarImportModal(), _ => !IsImportRunning);
-                _importNextMonthCommand = new RelayCommand(async _ => await RunImportAsync(), _ => !IsImportRunning);
+                _importNextMonthCommand = new RelayCommand(async _ => await RunImportAsync());
                 CloseCalendarImportModalCommand = new RelayCommand(_ => CloseCalendarImportModal());
                 CreateGoogleAccountCommand = new RelayCommand(_ => OpenGoogleAccountPage());
+                ToggleOptionsMenuCommand = new RelayCommand(_ => ToggleOptionsMenu());
                 LoggingService.Log("Commands initialized");
 
                 // Setup timer
@@ -427,14 +459,16 @@ namespace DesktopTaskAid.ViewModels
             {
                 TimerRemaining--;
                 _state.Timer.RemainingSeconds = TimerRemaining;
+                
+                // Increment Done Today counter every second while running
+                DoneTodaySeconds++;
+                _state.Timer.DoneTodaySeconds = DoneTodaySeconds;
             }
             else
             {
                 // Timer completed
                 TimerRunning = false;
                 _timerTick.Stop();
-                DoneTodaySeconds += _state.Timer.DurationSeconds;
-                _state.Timer.DoneTodaySeconds = DoneTodaySeconds;
                 TimerRemaining = _state.Timer.DurationSeconds;
                 _state.Timer.RemainingSeconds = TimerRemaining;
                 _state.Timer.IsRunning = false;
@@ -591,10 +625,11 @@ namespace DesktopTaskAid.ViewModels
 
         private void OpenAddTaskModal()
         {
+            var now = DateTime.Now;
             EditingTask = new TaskItem
             {
                 DueDate = DateTime.Today,
-                DueTime = new TimeSpan(9, 0, 0),
+                DueTime = new TimeSpan(now.Hour, now.Minute, 0),
                 ReminderStatus = "active"
             };
             ModalTitle = "Add Task";
@@ -646,12 +681,17 @@ namespace DesktopTaskAid.ViewModels
 
             if (existingTask != null)
             {
-                // Update existing task
+                // Update existing task - remove and re-add to force UI refresh
+                var index = AllTasks.IndexOf(existingTask);
                 existingTask.Name = EditingTask.Name;
                 existingTask.DueDate = EditingTask.DueDate;
                 existingTask.DueTime = EditingTask.DueTime;
                 existingTask.ReminderStatus = EditingTask.ReminderStatus;
                 existingTask.ReminderLabel = EditingTask.ReminderLabel;
+                
+                // Force collection change notification for UI update
+                AllTasks.RemoveAt(index);
+                AllTasks.Insert(index, existingTask);
             }
             else
             {
@@ -777,6 +817,11 @@ namespace DesktopTaskAid.ViewModels
         private void CloseCalendarImportModal()
         {
             IsCalendarImportModalOpen = false;
+        }
+
+        private void ToggleOptionsMenu()
+        {
+            IsOptionsMenuOpen = !IsOptionsMenuOpen;
         }
 
         private async Task RunImportAsync()

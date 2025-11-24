@@ -56,8 +56,8 @@ namespace DesktopHelper
             
         }
 
-        //Match window size to screen
-        private static void SetWindowP(bool passthrough)
+        //Match window size to screen and toggle pass-through mode
+        public static void SetWindowP(bool passthrough)
         {
             if (passthrough)
             {
@@ -96,7 +96,7 @@ namespace DesktopHelper
         private static IntPtr OriginalWindowStyle;
         private static IntPtr PassthruWindowStyle;
         private static BufferedPanel canvas;
-        public static Color TranspColor = Color.Black; //Choose outline + color to be keyed out into transparency.
+        public static Color TranspColor = Color.White; //Choose outline + color to be keyed out into transparency.
         public static Form helperForm;
         public struct NativeMessage
         {

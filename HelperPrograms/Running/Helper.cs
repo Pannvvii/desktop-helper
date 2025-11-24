@@ -49,6 +49,7 @@ namespace DesktopHelper
                 DateTime currTaskDate = DateTime.MinValue;
                 DateTime NextDue = DateTime.MinValue;
                 DateTime nowTruncated = DateTime.MinValue;
+                TimeSpan justDueTime = TimeSpan.MinValue;
 
 
                 string reminderTextDay = "You Have the following tasks due today: ";
@@ -57,28 +58,39 @@ namespace DesktopHelper
 
                 //Upcoming task list population and closest to due task determination
 
+
                 if (MainViewModel._allTasks != null && dateNow != null && MainHelper.petTime != AppTime)
                 {
                     foreach (var currTask in MainViewModel._allTasks)
                     {
                         allTask.Add(currTask);
-                        if (currTask.DueDate != null && currTask.Name != null)
+                        if (currTask.DueDate != null && currTask.Name != null && currTask.DueTime.Value != null)
                         {
-                            currTaskDate = currTask.DueDate.Value;
+                            //currTaskDate = currTask.DueDate.Value.Date.Add(currTask.DueTime.Value);
+                            currTaskDate = currTask.DueDate.Value.Date;
+                            justDueTime = currTask.DueTime.Value;
                             //if (currTask.DueDate >= DateTime.Now)
                             if (currTask.ReminderStatus == "active")
                             {
-                                Debug.WriteLine("Task: " + currTask.Name);
-                                Debug.WriteLine("Date of Task: " + currTaskDate.Date);
-                                Debug.WriteLine("Date of Today: " + DateTime.Today);
-                                if (currTaskDate.Date == DateTime.Today)
+                                //Debug.WriteLine("Task: " + currTask.Name);
+                                //Debug.WriteLine("Date of Task: " + currTaskDate.Date);
+                                //Debug.WriteLine("Date of Today: " + DateTime.Today);
+                                if (currTaskDate.Date <= DateTime.Today)
                                 //if (true)
                                 {
-                                    TaskLToday.Add(currTask);
-                                    Debug.WriteLine("Task Added For Today: " + currTask.Name);
-
+                                    if (!currTask.IsOverdue())
+                                    {
+                                        TaskLToday.Add(currTask);
+                                    }
+                                    //Debug.WriteLine("Task Added For Today: " + currTask.Name);
+                                    currTaskDate = currTaskDate + justDueTime;
                                     currTaskDate = currTaskDate.AddTicks(-(currTaskDate.Ticks % TimeSpan.TicksPerSecond));
                                     nowTruncated = DateTime.Now.AddTicks(-(DateTime.Now.Ticks % TimeSpan.TicksPerSecond));
+
+                                    //Debug.WriteLine("Task time: " + currTaskDate.TimeOfDay);
+                                    //Debug.WriteLine("Curr time: " + nowTruncated.TimeOfDay);
+                                    //Debug.WriteLine("Result: " + (currTaskDate.TimeOfDay - nowTruncated.TimeOfDay));
+                                    //Debug.WriteLine("Compare to: " + spanZero);
 
                                     if (currTaskDate.TimeOfDay - nowTruncated.TimeOfDay <= spanZero)
                                     {
@@ -86,13 +98,15 @@ namespace DesktopHelper
                                         {
                                             MainHelper.timeNotifQZero.Add(currTask);
                                         }
-                                    } else if (currTaskDate.TimeOfDay - nowTruncated.TimeOfDay <= spanShort)
+                                    }
+                                    else if (currTaskDate.TimeOfDay - nowTruncated.TimeOfDay <= spanShort)
                                     {
                                         if (!MainHelper.timeNotifQShort.Contains(currTask) && !MainHelper.timeNotifQShortFinished.Contains(currTask))
                                         {
                                             MainHelper.timeNotifQShort.Add(currTask);
                                         }
-                                    } else if (currTaskDate.TimeOfDay - nowTruncated.TimeOfDay <= spanLong)
+                                    }
+                                    else if (currTaskDate.TimeOfDay - nowTruncated.TimeOfDay <= spanLong)
                                     {
                                         if (!MainHelper.timeNotifQLong.Contains(currTask) && !MainHelper.timeNotifQLongFinished.Contains(currTask))
                                         {
@@ -104,7 +118,7 @@ namespace DesktopHelper
                                 else if ((dateNow.Subtract(currTaskDate).TotalDays <= 7) && (currTask.DueDate >= DateTime.Now))
                                 {
                                     TaskLWeek.Add(currTask);
-                                    Debug.WriteLine("Task Added For This Week: " + currTask.Name);
+                                    //Debug.WriteLine("Task Added For This Week: " + currTask.Name);
                                 }
                             }
                         }
@@ -114,7 +128,9 @@ namespace DesktopHelper
                     {
                         foreach (var notifTask in TaskLToday)
                         {
+
                             reminderTextDay = reminderTextDay + notifTask.Name + ", ";
+                            
                         }
                         reminderTextDay = reminderTextDay.Remove(reminderTextDay.Length - 2);
                     }
@@ -152,13 +168,14 @@ namespace DesktopHelper
                     MainHelper.drawString = "No Tasks!";
                     MainHelper.isbubble = false;
                 }
-                
-                
+
+
                 if (MainHelper.oldList.Count > allTask.Count && MainHelper.oldList.Count != 0)
                 {
                     MainHelper.congratulateFlag = 1;
                     MainHelper.oldList = allTask;
-                } else
+                }
+                else
                 {
                     MainHelper.oldList = allTask;
                 }
@@ -166,14 +183,14 @@ namespace DesktopHelper
 
 
 
-                    //petx pety petStatus petTime petMoveDist
-                    //bubblex bubbley isbubble
-                    //petStatus
-                
-                
-                
+                //petx pety petStatus petTime petMoveDist
+                //bubblex bubbley isbubble
+                //petStatus
 
-                int speed = 50;
+
+
+
+                int speed = 10;
 
                 //(AppTime % 2 == 0) && 
 
@@ -184,20 +201,25 @@ namespace DesktopHelper
                 {
                     MainHelper.petTime = AppTime;
                     //Debug.WriteLine("Anim: " + MainHelper.petAnimStage);
-                    //Debug.WriteLine("NotifFlag: " + MainHelper.needNotifFlag);
+                    Debug.WriteLine("NotifFlag: " + MainHelper.needNotifFlag);
                     //Debug.WriteLine("Notif Length: " + MainHelper.notifLength);
 
                     //Pet has just launched, start a special notification
+                    //if (MainHelper.needNotifFlag == 0 && reminderTextDay == "No tasks due today." && reminderTextWeek == "No other tasks due this week." && MainHelper.petStatus == "Idle")
+                    //{
+                    //    MainHelper.needNotifFlag = 1;
+                    //    MainHelper.isbubble = false;
+                    //}
                     if (MainHelper.needNotifFlag == 0 && MainHelper.petStatus == "Idle")
                     {
                         if (MainHelper.notifLength != 0)
                         {
                             MainHelper.isbubble = true;
-                            if (MainHelper.notifLength > 2)
+                            if (MainHelper.notifLength > 25)
                             {
                                 MainHelper.drawString = reminderTextDay;
                             }
-                            else if (MainHelper.notifLength <= 2)
+                            else if (MainHelper.notifLength <= 25)
                             {
                                 MainHelper.drawString = reminderTextWeek;
                             }
@@ -209,7 +231,7 @@ namespace DesktopHelper
                         else if (MainHelper.notifLength == 0)
                         {
                             MainHelper.needNotifFlag = 1;
-                            MainHelper.notifLength = 5;
+                            MainHelper.notifLength = 50;
                         }
                     }
                     //Pet is idle and notification flag is active
@@ -227,9 +249,9 @@ namespace DesktopHelper
                             {
                                 MainHelper.notifLength--;
                             }
-                            if (MainHelper.petAnimStage == 4 || MainHelper.petAnimStage > 4 || MainHelper.petAnimStage < 1)
+                            if (MainHelper.petAnimStage == 20 || MainHelper.petAnimStage > 20 || MainHelper.petAnimStage < 15)
                             {
-                                MainHelper.petAnimStage = 1;
+                                MainHelper.petAnimStage = 15;
                             }
                             else
                             {
@@ -239,7 +261,7 @@ namespace DesktopHelper
                         else if (MainHelper.notifLength == 0)
                         {
                             MainHelper.needNotifFlag = 1;
-                            MainHelper.notifLength = 5;
+                            MainHelper.notifLength = 25;
                         }
                     }
                     //Notification is not active and Task complete congratulate is flagged
@@ -262,12 +284,12 @@ namespace DesktopHelper
                         else if (MainHelper.notifLength == 0)
                         {
                             MainHelper.congratulateFlag = 0;
-                            MainHelper.notifLength = 15;
+                            MainHelper.notifLength = 25;
                             MainHelper.congratulateActive = 0;
                         }
-                    } 
+                    }
                     //Time remaining for at least one task has reached the threshold
-                    else if (MainHelper.timeNotifQZero.Any() || MainHelper.timeNotifQShort.Any()  || MainHelper.timeNotifQLong.Any() || MainHelper.timeNotifActive != 0)
+                    else if (MainHelper.timeNotifQZero.Any() || MainHelper.timeNotifQShort.Any() || MainHelper.timeNotifQLong.Any() || MainHelper.timeNotifActive != 0)
                     {
 
                         if (MainHelper.timeNotifQZero.Any() || MainHelper.timeNotifActive == 1)
@@ -279,7 +301,7 @@ namespace DesktopHelper
                                 MainHelper.isbubble = true;
                                 if (MainHelper.notifLength > 0)
                                 {
-                                    MainHelper.drawString = "Task Past Due: "+ MainHelper.timeNotifQZero[0].Name;
+                                    MainHelper.drawString = "Task Past Due: " + MainHelper.timeNotifQZero[0].Name;
                                 }
                                 if (MainHelper.notifLength > 0)
                                 {
@@ -289,7 +311,7 @@ namespace DesktopHelper
                             else if (MainHelper.notifLength == 0)
                             {
                                 MainHelper.timeNotifActive = 0;
-                                MainHelper.notifLength = 15;
+                                MainHelper.notifLength = 25;
                                 MainHelper.timeNotifQZeroFinished.Add(MainHelper.timeNotifQZero[0]);
                                 MainHelper.timeNotifQZero.RemoveAt(0);
                             }
@@ -304,7 +326,7 @@ namespace DesktopHelper
                                 MainHelper.isbubble = true;
                                 if (MainHelper.notifLength > 0)
                                 {
-                                    MainHelper.drawString = "task Due in 10 Minutes: "+ MainHelper.timeNotifQShort[0].Name;
+                                    MainHelper.drawString = "Task due in 10 minutes: " + MainHelper.timeNotifQShort[0].Name;
                                 }
                                 if (MainHelper.notifLength > 0)
                                 {
@@ -314,7 +336,7 @@ namespace DesktopHelper
                             else if (MainHelper.notifLength == 0)
                             {
                                 MainHelper.timeNotifActive = 0;
-                                MainHelper.notifLength = 15;
+                                MainHelper.notifLength = 25;
                                 MainHelper.timeNotifQShortFinished.Add(MainHelper.timeNotifQShort[0]);
                                 MainHelper.timeNotifQShort.RemoveAt(0);
                             }
@@ -329,7 +351,7 @@ namespace DesktopHelper
                                 MainHelper.isbubble = true;
                                 if (MainHelper.notifLength > 0)
                                 {
-                                    MainHelper.drawString = "Task Due in an Hour: " + MainHelper.timeNotifQLong[0].Name;
+                                    MainHelper.drawString = "Task due in an hour: " + MainHelper.timeNotifQLong[0].Name;
                                 }
                                 if (MainHelper.notifLength > 0)
                                 {
@@ -339,7 +361,7 @@ namespace DesktopHelper
                             else if (MainHelper.notifLength == 0)
                             {
                                 MainHelper.timeNotifActive = 0;
-                                MainHelper.notifLength = 15;
+                                MainHelper.notifLength = 25;
                                 MainHelper.timeNotifQLongFinished.Add(MainHelper.timeNotifQLong[0]);
                                 MainHelper.timeNotifQLong.RemoveAt(0);
                             }
@@ -359,27 +381,27 @@ namespace DesktopHelper
                     if ((MainHelper.petStatus == "Idle") && (MainHelper.needNotifFlag == 1) && (MainHelper.congratulateActive == 0) && (MainHelper.timeNotifActive == 0))
                     {
                         int rndResult = 0;
-                        rndResult = MainHelper.rnd.Next(1, 14);
-                        Debug.WriteLine("RandRes: " + rndResult);
+                        rndResult = MainHelper.rnd.Next(1, 30);
+                        //Debug.WriteLine("RandRes: " + rndResult);
                         if (rndResult == 6)
                         {
-                            
+
                             int rndDist = 0;
-                            rndDist = MainHelper.rndsec.Next(1, 8);
+                            rndDist = MainHelper.rndsec.Next(10, 100);
                             MainHelper.petMoveDist = rndDist;
-                            
+
                             int rndDirect = 0;
                             rndDirect = MainHelper.rndthird.Next(1, 3);
-                            Debug.WriteLine("RandDRes: " + rndDirect);
+                            //Debug.WriteLine("RandDRes: " + rndDirect);
                             MainHelper.petMoveDirection = rndDirect;
                             MainHelper.petStatus = "Moving";
                             //MainHelper.petAnimStage = 5;
 
-                            Debug.WriteLine(MainHelper.petStatus);
-                            Debug.WriteLine("Direction: " + MainHelper.petMoveDirection);
-                            if (MainHelper.petAnimStage == 4 || MainHelper.petAnimStage > 4 || MainHelper.petAnimStage < 1)
+                            //Debug.WriteLine(MainHelper.petStatus);
+                            //Debug.WriteLine("Direction: " + MainHelper.petMoveDirection);
+                            if (MainHelper.petAnimStage == 20 || MainHelper.petAnimStage > 20 || MainHelper.petAnimStage < 15)
                             {
-                                MainHelper.petAnimStage = 1;
+                                MainHelper.petAnimStage = 15;
                             }
                             else
                             {
@@ -388,9 +410,9 @@ namespace DesktopHelper
                         }
                         else
                         {
-                            if (MainHelper.petAnimStage == 4 || MainHelper.petAnimStage > 4 || MainHelper.petAnimStage < 1)
+                            if (MainHelper.petAnimStage == 20 || MainHelper.petAnimStage > 20 || MainHelper.petAnimStage < 15)
                             {
-                                MainHelper.petAnimStage = 1;
+                                MainHelper.petAnimStage = 15;
                             }
                             else
                             {
@@ -407,7 +429,7 @@ namespace DesktopHelper
                             {
                                 MainHelper.bubblex = MainHelper.bubblex - speed;
                                 MainHelper.petx = MainHelper.petx - speed;
-                                if (MainHelper.petAnimStage == 8 || MainHelper.petAnimStage < 4 || MainHelper.petAnimStage > 8)
+                                if (MainHelper.petAnimStage == 9 || MainHelper.petAnimStage < 5 || MainHelper.petAnimStage > 9)
                                 {
                                     MainHelper.petAnimStage = 5;
                                 }
@@ -420,14 +442,14 @@ namespace DesktopHelper
                                 if (MainHelper.petMoveDist == 0)
                                 {
                                     MainHelper.petStatus = "Idle";
-                                    MainHelper.petAnimStage = 1;
-                                    Debug.WriteLine(MainHelper.petStatus);
+                                    MainHelper.petAnimStage = 15;
+                                    //Debug.WriteLine(MainHelper.petStatus);
                                 }
                             }
                             else
                             {
                                 MainHelper.petStatus = "Idle";
-                                MainHelper.petAnimStage = 1;
+                                MainHelper.petAnimStage = 15;
                             }
                         }
                         else if (MainHelper.petMoveDirection == 2)
@@ -436,9 +458,9 @@ namespace DesktopHelper
                             {
                                 MainHelper.bubblex = MainHelper.bubblex + speed;
                                 MainHelper.petx = MainHelper.petx + speed;
-                                if (MainHelper.petAnimStage == 12 || MainHelper.petAnimStage < 9 || MainHelper.petAnimStage > 12)
+                                if (MainHelper.petAnimStage == 14 || MainHelper.petAnimStage < 10 || MainHelper.petAnimStage > 14)
                                 {
-                                    MainHelper.petAnimStage = 9;
+                                    MainHelper.petAnimStage = 10;
                                 }
                                 else
                                 {
@@ -449,15 +471,15 @@ namespace DesktopHelper
                                 if (MainHelper.petMoveDist == 0)
                                 {
                                     MainHelper.petStatus = "Idle";
-                                    MainHelper.petAnimStage = 1;
-                                    Debug.WriteLine(MainHelper.petStatus);
+                                    MainHelper.petAnimStage = 15;
+                                    //Debug.WriteLine(MainHelper.petStatus);
                                 }
                             }
                             else
                             {
                                 MainHelper.petStatus = "Idle";
-                                MainHelper.petAnimStage = 1;
-                                Debug.WriteLine(MainHelper.petStatus);
+                                MainHelper.petAnimStage = 15;
+                                //Debug.WriteLine(MainHelper.petStatus);
                             }
                         }
                     }
@@ -482,8 +504,8 @@ namespace DesktopHelper
             int height = 100; // Size of PNG for helper
 
             // Create font and brush.
-            Font drawFont = new Font("Comic Sans MS", 16);
-            SolidBrush drawBrush = new SolidBrush(System.Drawing.Color.Blue);
+            Font drawFont = new Font("Arial", 16);
+            SolidBrush drawBrush = new SolidBrush(System.Drawing.Color.Black);
 
             // Set format    of string.
             StringFormat drawFormat = new StringFormat();
@@ -501,23 +523,23 @@ namespace DesktopHelper
             if (MainHelper.HelperEnable == true)
             {
                 position = new System.Drawing.Point(MainHelper.petx, MainHelper.pety);
-                
-                if (MainHelper.petAnimStage == 1)
+
+                if (MainHelper.petAnimStage == 15 || MainHelper.petAnimStage == 16)
                 {
                     myStream = myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Idle1.png");
                 }
-                else if (MainHelper.petAnimStage == 2)
+                else if (MainHelper.petAnimStage == 17 || MainHelper.petAnimStage == 18)
                 {
                     myStream = myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Idle2.png");
                 }
-                else if (MainHelper.petAnimStage == 3)
+                else if (MainHelper.petAnimStage == 19 || MainHelper.petAnimStage == 20)
                 {
                     myStream = myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Idle3.png");
                 }
-                else if (MainHelper.petAnimStage == 4)
-                {
-                    myStream = myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Idle4.png");
-                }
+                //else if (MainHelper.petAnimStage == 4)
+                //{
+                 //   myStream = myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Idle4.png");
+                //}
                 else if (MainHelper.petAnimStage == 5)
                 {
                     myStream = myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Left1.png");
@@ -536,27 +558,36 @@ namespace DesktopHelper
                 }
                 else if (MainHelper.petAnimStage == 9)
                 {
-                    myStream = myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Right1.png");
+                    myStream = myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Left5.png");
                 }
                 else if (MainHelper.petAnimStage == 10)
                 {
-                    myStream = myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Right2.png");
+                    myStream = myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Right1.png");
                 }
                 else if (MainHelper.petAnimStage == 11)
                 {
-                    myStream = myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Right3.png");
+                    myStream = myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Right2.png");
                 }
                 else if (MainHelper.petAnimStage == 12)
                 {
+                    myStream = myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Right3.png");
+                }
+                else if (MainHelper.petAnimStage == 13)
+                {
                     myStream = myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Right4.png");
                 }
-                
-                
-                
-                
+                else if (MainHelper.petAnimStage == 14)
+                {
+                    myStream = myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Right5.png");
+                }
+
+
+
+                //Debug.WriteLine(MainHelper.petAnimStage);
                 bmp = new Bitmap(myStream);
                 sourceImage = bmp;
-                graphics.DrawImage(sourceImage, position.X, position.Y, sourceRect, GraphicsUnit.Pixel);
+                //graphics.DrawImage(sourceImage, position.X, position.Y, sourceRect, GraphicsUnit.Pixel);
+                graphics.DrawImage(sourceImage, position.X, position.Y, 100, 100);
 
 
                 if (MainHelper.isbubble == true)
@@ -585,14 +616,20 @@ namespace DesktopHelper
                     float originY = fixedBottomY - totalTextHeight;
 
                     RectangleF rect = new RectangleF(position.X - padding - 55, originY, maxWidth + 2 * padding, measuredSize.Height + 2 * padding);
-                    graphics.FillRectangle(System.Drawing.Brushes.White, rect);
+                    graphics.FillRectangle(System.Drawing.Brushes.LightGray, rect);
                     graphics.DrawRectangle(Pens.White, rect.X, rect.Y, rect.Width, rect.Height);
 
                     RectangleF textRect = new RectangleF(position.X - 55, originY + padding, maxWidth, measuredSize.Height);
 
                     //graphics.DrawString(MainHelper.drawString, drawFont, drawBrush, position.X + 55, position.Y + 70, drawFormat);
-                    graphics.FillPolygon(System.Drawing.Brushes.White, new System.Drawing.Point[] { new System.Drawing.Point(position.X + 200, position.Y + 0), new System.Drawing.Point(position.X + 100, position.Y + 0), new System.Drawing.Point(position.X + 200, position.Y + 40) });
+                    graphics.FillPolygon(System.Drawing.Brushes.LightGray, new System.Drawing.Point[] { new System.Drawing.Point(position.X + 200, position.Y + 0), new System.Drawing.Point(position.X + 100, position.Y + 0), new System.Drawing.Point(position.X + 200, position.Y + 40) });
                     graphics.DrawString(MainHelper.drawString, drawFont, drawBrush, textRect, format);
+
+                    //Draw Border
+                    bmp = new Bitmap(myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Border.png"));
+                    sourceImage = bmp;
+                    //graphics.DrawImage(sourceImage, position.X, position.Y, sourceRect, GraphicsUnit.Pixel);
+                    graphics.DrawImage(sourceImage, position.X-63, position.Y-36, 317, 83);
                 }
             }
             else

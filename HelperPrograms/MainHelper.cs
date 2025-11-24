@@ -32,7 +32,7 @@ namespace DesktopHelper
         public static int timeNotifActive = 0;
         public static int reminderInterval = 15;
         public static int needNotifFlag = 0;
-        public static int notifLength = 15;
+        public static int notifLength = 50;
         public static bool isbubble = true;
         public static string drawString = "Hi!";
         public static bool isClicked = false;
@@ -44,10 +44,22 @@ namespace DesktopHelper
         public static double petTime = 0; // Global Pet update timer
         public static int petMoveDist; // Global Pet movement distance
         public static int petMoveDirection = 1;
-        public static int petAnimStage = 1;
+        public static int petAnimStage = 15;
 
         public static int petx = widthWindow - 100;
         public static int pety = heightWindow - 95;
+
+        public static int buttonX = widthWindow - 160;
+        public static int starButtonY = heightWindow - 150;
+        public static int moonButtonY = heightWindow - 110;
+        public static int buttonSize = 40;
+
+        public static bool starButtonHover = false;
+        public static bool moonButtonHover = false;
+
+        public static bool DragWindowEnabled = true;
+        public static bool PullMouseEnabled = true;
+
 
         public static int bubblex = widthWindow - 300;
         public static int bubbley = heightWindow - 150;
