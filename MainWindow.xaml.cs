@@ -7,12 +7,18 @@ using DesktopTaskAid.Services;
 using DesktopTaskAid.ViewModels;
 using System.Windows.Controls;
 using System.Threading;
+using System.Windows.Forms;
+using System.Drawing;
+
 
 namespace DesktopTaskAid
 {
     public partial class MainWindow : Window
     {
         public static Thread t = new Thread(HelperThread);
+        //public event System.Windows.Forms.FormClosingEventHandler FormClosing;
+        private NotifyIcon notifyIcon;
+
         public MainWindow()
         {
             LoggingService.Log("=== MainWindow Constructor BEGIN ===");
@@ -25,8 +31,25 @@ namespace DesktopTaskAid
                 LoggingService.Log("InitializeComponent completed successfully");
 
                 LoggingService.Log("Calling Helper");
-                
+
+                t.IsBackground = true;
                 t.Start();
+
+                //System.Windows.MessageBox.Show(Environment.CurrentDirectory);
+
+                notifyIcon = new NotifyIcon();
+                //var iconStream = System.Windows.Application.GetResourceStream(new Uri("Icon1.ico", UriKind.Relative)).Stream;
+                notifyIcon.Icon = SystemIcons.Application;
+                notifyIcon.Visible = false;
+                notifyIcon.Text = "Desktop Helper";
+
+                notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
+
+                this.StateChanged += MainWindow_StateChanged;
+
+
+
+
 
                 LoggingService.Log("Helper completed successfully");
 
@@ -61,7 +84,7 @@ namespace DesktopTaskAid
         private void UpdateWelcomeIllustration()
         {
             // Check if dark theme is active
-            var isDarkTheme = Application.Current.Resources.MergedDictionaries
+            var isDarkTheme = System.Windows.Application.Current.Resources.MergedDictionaries
                 .Any(d => d.Source?.ToString().Contains("darkTheme.xaml") == true);
             
             string imageName = isDarkTheme ? "sticker-dark.png" : "sticker-light.png";
@@ -116,12 +139,27 @@ namespace DesktopTaskAid
                 : WindowState.Maximized;
         }
 
-        private void CloseWindow(object sender, RoutedEventArgs e)
+        /*private void CloseWindow(object sender, RoutedEventArgs e)
         {
             LoggingService.Log("CloseWindow clicked - Application shutting down");
             t.Join();
             this.Close();
-            
+
+        }*/
+
+        private void MainWindow_StateChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == WindowState.Minimized)
+            {
+                notifyIcon.Visible = true;
+                this.Hide();
+            }
+        }
+        private void NotifyIcon_DoubleClick(object sender, EventArgs e)
+        {
+            this.Show();
+            this.WindowState = WindowState.Normal;
+            notifyIcon.Visible = false;
         }
     }
 }

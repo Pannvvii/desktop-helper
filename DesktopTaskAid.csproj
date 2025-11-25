@@ -24,6 +24,8 @@
     <None Remove="HelperPrograms\Running\Resources\Border.png" />
     <None Remove="HelperPrograms\Running\Resources\Cat.png" />
     <None Remove="HelperPrograms\Running\Resources\Cat2.png" />
+    <None Remove="HelperPrograms\Running\Resources\Icon.png" />
+    <None Remove="HelperPrograms\Running\Resources\Icon1.ico" />
     <None Remove="HelperPrograms\Running\Resources\Idle1.png" />
     <None Remove="HelperPrograms\Running\Resources\Idle2.png" />
     <None Remove="HelperPrograms\Running\Resources\Idle3.png" />
@@ -39,10 +41,13 @@
     <None Remove="HelperPrograms\Running\Resources\Right3.png" />
     <None Remove="HelperPrograms\Running\Resources\Right4.png" />
     <None Remove="HelperPrograms\Running\Resources\Right5.png" />
+    <None Remove="Icon1.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="HelperPrograms\Running\Resources\Border.png" />
+    <EmbeddedResource Include="HelperPrograms\Running\Resources\Icon.png" />
+    <EmbeddedResource Include="HelperPrograms\Running\Resources\Icon1.ico" />
     <EmbeddedResource Include="HelperPrograms\Running\Resources\Idle1.png" />
     <EmbeddedResource Include="HelperPrograms\Running\Resources\Idle2.png" />
     <EmbeddedResource Include="HelperPrograms\Running\Resources\Idle3.png" />
@@ -56,6 +61,9 @@
     <EmbeddedResource Include="HelperPrograms\Running\Resources\Right3.png" />
     <EmbeddedResource Include="HelperPrograms\Running\Resources\Right4.png" />
     <EmbeddedResource Include="HelperPrograms\Running\Resources\Right5.png" />
+    <Resource Include="Icon1.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

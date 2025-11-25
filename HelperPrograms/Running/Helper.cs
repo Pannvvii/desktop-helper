@@ -44,7 +44,6 @@ namespace DesktopHelper
                 var allTask = new List<TaskItem> { };
                 var storTask = new TaskItem { Name = "New Task", DueDate = null, ReminderStatus = "None" };
 
-
                 DateTime dateNow = DateTime.Now;
                 DateTime currTaskDate = DateTime.MinValue;
                 DateTime NextDue = DateTime.MinValue;
@@ -83,7 +82,7 @@ namespace DesktopHelper
                                         TaskLToday.Add(currTask);
                                     }
                                     //Debug.WriteLine("Task Added For Today: " + currTask.Name);
-                                    currTaskDate = currTaskDate + justDueTime;
+                                    //currTaskDate = currTaskDate + justDueTime;
                                     currTaskDate = currTaskDate.AddTicks(-(currTaskDate.Ticks % TimeSpan.TicksPerSecond));
                                     nowTruncated = DateTime.Now.AddTicks(-(DateTime.Now.Ticks % TimeSpan.TicksPerSecond));
 
@@ -187,7 +186,27 @@ namespace DesktopHelper
                 //bubblex bubbley isbubble
                 //petStatus
 
+                var nextDueTask = new TaskItem();
+                nextDueTask = null;
 
+
+                foreach (var cuTask in allTask)
+                {
+                    if (nextDueTask == null)
+                    {
+                        if (!cuTask.IsOverdue()) 
+                        { 
+                            nextDueTask = cuTask;
+                        }
+                    } else if (nextDueTask != null)
+                    {
+                        if (cuTask.DueDate < nextDueTask.DueDate)
+                        {
+                            nextDueTask = cuTask;
+                        }
+                    }
+                    
+                }
 
 
                 int speed = 10;
@@ -200,7 +219,7 @@ namespace DesktopHelper
                 if (MainHelper.petTime != AppTime)
                 {
                     MainHelper.petTime = AppTime;
-                    //Debug.WriteLine("Anim: " + MainHelper.petAnimStage);
+                    Debug.WriteLine("Anim: " + MainHelper.petAnimStage);
                     Debug.WriteLine("NotifFlag: " + MainHelper.needNotifFlag);
                     //Debug.WriteLine("Notif Length: " + MainHelper.notifLength);
 
@@ -243,7 +262,13 @@ namespace DesktopHelper
                             MainHelper.isbubble = true;
                             if (MainHelper.notifLength > 0)
                             {
-                                MainHelper.drawString = "Time for a Reminder!";
+                                if (nextDueTask != null)
+                                {
+                                    MainHelper.drawString = "The next task you have coming up is " + nextDueTask.Name;
+                                }else
+                                {
+                                    MainHelper.drawString = "No tasks coming up! You're all clear!";
+                                }
                             }
                             if (MainHelper.notifLength > 0)
                             {
@@ -425,7 +450,7 @@ namespace DesktopHelper
                     {
                         if (MainHelper.petMoveDirection == 1)
                         {
-                            if (MainHelper.bubblex - speed >= 0)
+                            if (MainHelper.bubblex - speed >= 400)
                             {
                                 MainHelper.bubblex = MainHelper.bubblex - speed;
                                 MainHelper.petx = MainHelper.petx - speed;
