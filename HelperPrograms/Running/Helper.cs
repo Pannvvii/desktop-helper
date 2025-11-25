@@ -47,7 +47,8 @@ namespace DesktopHelper
                 DateTime dateNow = DateTime.Now;
                 DateTime currTaskDate = DateTime.MinValue;
                 DateTime NextDue = DateTime.MinValue;
-                DateTime nowTruncated = DateTime.MinValue;
+                TimeSpan nowTruncated = TimeSpan.MinValue;
+                TimeSpan currTaskTime = TimeSpan.MinValue;
                 TimeSpan justDueTime = TimeSpan.MinValue;
 
 
@@ -83,29 +84,30 @@ namespace DesktopHelper
                                     }
                                     //Debug.WriteLine("Task Added For Today: " + currTask.Name);
                                     //currTaskDate = currTaskDate + justDueTime;
-                                    currTaskDate = currTaskDate.AddTicks(-(currTaskDate.Ticks % TimeSpan.TicksPerSecond));
-                                    nowTruncated = DateTime.Now.AddTicks(-(DateTime.Now.Ticks % TimeSpan.TicksPerSecond));
-
+                                    //currTaskDate = currTaskDate.AddTicks(-(currTaskDate.Ticks % TimeSpan.TicksPerSecond));
+                                    //nowTruncated = DateTime.Now.AddTicks(-(DateTime.Now.Ticks % TimeSpan.TicksPerSecond));
+                                    currTaskTime = TimeSpan.FromSeconds(Math.Round((justDueTime).TotalSeconds));
+                                    nowTruncated = TimeSpan.FromSeconds(Math.Round((DateTime.Now.TimeOfDay).TotalSeconds));
                                     //Debug.WriteLine("Task time: " + currTaskDate.TimeOfDay);
                                     //Debug.WriteLine("Curr time: " + nowTruncated.TimeOfDay);
                                     //Debug.WriteLine("Result: " + (currTaskDate.TimeOfDay - nowTruncated.TimeOfDay));
                                     //Debug.WriteLine("Compare to: " + spanZero);
 
-                                    if (currTaskDate.TimeOfDay - nowTruncated.TimeOfDay <= spanZero)
+                                    if (justDueTime - nowTruncated <= spanZero)
                                     {
                                         if (!MainHelper.timeNotifQZero.Contains(currTask) && !MainHelper.timeNotifQZeroFinished.Contains(currTask))
                                         {
                                             MainHelper.timeNotifQZero.Add(currTask);
                                         }
                                     }
-                                    else if (currTaskDate.TimeOfDay - nowTruncated.TimeOfDay <= spanShort)
+                                    else if (justDueTime - nowTruncated <= spanShort)
                                     {
                                         if (!MainHelper.timeNotifQShort.Contains(currTask) && !MainHelper.timeNotifQShortFinished.Contains(currTask))
                                         {
                                             MainHelper.timeNotifQShort.Add(currTask);
                                         }
                                     }
-                                    else if (currTaskDate.TimeOfDay - nowTruncated.TimeOfDay <= spanLong)
+                                    else if (justDueTime - nowTruncated <= spanLong)
                                     {
                                         if (!MainHelper.timeNotifQLong.Contains(currTask) && !MainHelper.timeNotifQLongFinished.Contains(currTask))
                                         {
