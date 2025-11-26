@@ -27,7 +27,6 @@ namespace DesktopHelper
         {
             Graphics graphics = e.Graphics;
 
-            //int AppTime = (int)Math.Floor(Time.time);
             double AppTime = Math.Round(Time.time, 1);
 
             TimeSpan spanShort = TimeSpan.FromMinutes(10);
@@ -90,32 +89,18 @@ namespace DesktopHelper
                         allTask.Add(currTask);
                         if (currTask.DueDate != null && currTask.Name != null && currTask.DueTime.Value != null)
                         {
-                            //currTaskDate = currTask.DueDate.Value.Date.Add(currTask.DueTime.Value);
                             currTaskDate = currTask.DueDate.Value.Date;
                             justDueTime = currTask.DueTime.Value;
-                            //if (currTask.DueDate >= DateTime.Now)
                             if (currTask.ReminderStatus == "active")
                             {
-                                //Debug.WriteLine("Task: " + currTask.Name);
-                                //Debug.WriteLine("Date of Task: " + currTaskDate.Date);
-                                //Debug.WriteLine("Date of Today: " + DateTime.Today);
                                 if (currTaskDate.Date <= DateTime.Today)
-                                //if (true)
                                 {
                                     if (!currTask.IsOverdue())
                                     {
                                         TaskLToday.Add(currTask);
                                     }
-                                    //Debug.WriteLine("Task Added For Today: " + currTask.Name);
-                                    //currTaskDate = currTaskDate + justDueTime;
-                                    //currTaskDate = currTaskDate.AddTicks(-(currTaskDate.Ticks % TimeSpan.TicksPerSecond));
-                                    //nowTruncated = DateTime.Now.AddTicks(-(DateTime.Now.Ticks % TimeSpan.TicksPerSecond));
                                     currTaskTime = TimeSpan.FromSeconds(Math.Round((justDueTime).TotalSeconds));
                                     nowTruncated = TimeSpan.FromSeconds(Math.Round((DateTime.Now.TimeOfDay).TotalSeconds));
-                                    //Debug.WriteLine("Task time: " + currTaskDate.TimeOfDay);
-                                    //Debug.WriteLine("Curr time: " + nowTruncated.TimeOfDay);
-                                    //Debug.WriteLine("Result: " + (currTaskDate.TimeOfDay - nowTruncated.TimeOfDay));
-                                    //Debug.WriteLine("Compare to: " + spanZero);
 
                                     if (currTask.IsOverdue())
                                     {
@@ -143,7 +128,6 @@ namespace DesktopHelper
                                 else if ((dateNow.Subtract(currTaskDate).TotalDays <= 7) && (currTask.DueDate >= DateTime.Now))
                                 {
                                     TaskLWeek.Add(currTask);
-                                    //Debug.WriteLine("Task Added For This Week: " + currTask.Name);
                                 }
                             }
                         }
@@ -206,12 +190,6 @@ namespace DesktopHelper
                 }
 
 
-
-
-                //petx pety petStatus petTime petMoveDist
-                //bubblex bubbley isbubble
-                //petStatus
-
                 var nextDueTask = new TaskItem();
                 nextDueTask = null;
 
@@ -238,10 +216,8 @@ namespace DesktopHelper
 
                 int speed = 10;
 
-                //(AppTime % 2 == 0) && 
 
                 //PET UPDATE
-
 
                 if (MainHelper.petTime != AppTime)
                 {
@@ -249,14 +225,9 @@ namespace DesktopHelper
                     Debug.WriteLine("Anim: " + MainHelper.petAnimStage);
                     Debug.WriteLine("NotifFlag: " + MainHelper.needNotifFlag);
                     Debug.WriteLine("TimeNotifFlag: " + MainHelper.timeNotifActive);
-                    //Debug.WriteLine("Notif Length: " + MainHelper.notifLength);
 
                     //Pet has just launched, start a special notification
-                    //if (MainHelper.needNotifFlag == 0 && reminderTextDay == "No tasks due today." && reminderTextWeek == "No other tasks due this week." && MainHelper.petStatus == "Idle")
-                    //{
-                    //    MainHelper.needNotifFlag = 1;
-                    //    MainHelper.isbubble = false;
-                    //}
+
                     if (MainHelper.needNotifFlag == 0 && MainHelper.petStatus == "Idle")
                     {
                         if (MainHelper.notifLength != 0)
@@ -446,13 +417,8 @@ namespace DesktopHelper
 
                             int rndDirect = 0;
                             rndDirect = MainHelper.rndthird.Next(1, 3);
-                            //Debug.WriteLine("RandDRes: " + rndDirect);
                             MainHelper.petMoveDirection = rndDirect;
                             MainHelper.petStatus = "Moving";
-                            //MainHelper.petAnimStage = 5;
-
-                            //Debug.WriteLine(MainHelper.petStatus);
-                            //Debug.WriteLine("Direction: " + MainHelper.petMoveDirection);
                             if (MainHelper.petAnimStage == 20 || MainHelper.petAnimStage > 20 || MainHelper.petAnimStage < 15)
                             {
                                 MainHelper.petAnimStage = 15;
@@ -497,7 +463,6 @@ namespace DesktopHelper
                                 {
                                     MainHelper.petStatus = "Idle";
                                     MainHelper.petAnimStage = 15;
-                                    //Debug.WriteLine(MainHelper.petStatus);
                                 }
                             }
                             else
@@ -526,28 +491,19 @@ namespace DesktopHelper
                                 {
                                     MainHelper.petStatus = "Idle";
                                     MainHelper.petAnimStage = 15;
-                                    //Debug.WriteLine(MainHelper.petStatus);
                                 }
                             }
                             else
                             {
                                 MainHelper.petStatus = "Idle";
                                 MainHelper.petAnimStage = 15;
-                                //Debug.WriteLine(MainHelper.petStatus);
                             }
                         }
                     }
                 }
             }
 
-            //int heightWindow = (System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height);
-            // SystemParameters.FullPrimaryScreenHeight);
-            //int widthWindow = (int)Math.Floor(SystemParameters.FullPrimaryScreenWidth);
-            //Screen.PrimaryScreen.WorkingArea.height - Screen.PrimaryScreen.Bounds
-            //System.Drawing.Point position = System.Windows.Forms.Control.MousePosition; // TEMPORARY, sets helper to stay on mouse cursor for testing
-            //String drawString = "No Tasks";
-            //Debug.WriteLine(Time.time);
-            //drawString = currTask.TaskName;
+
             int PSBH = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
             int TaskBarHeight = PSBH - System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height;
 
@@ -561,11 +517,11 @@ namespace DesktopHelper
             Font drawFont = new Font("Arial", 16);
             SolidBrush drawBrush = new SolidBrush(System.Drawing.Color.Black);
 
-            // Set format    of string.
+            // Set format of string.
             StringFormat drawFormat = new StringFormat();
             drawFormat.FormatFlags = StringFormatFlags.NoWrap;
 
-            //Get PNG for helper, Future versions will swap between multiple for animations.
+            //Get PNG for helper
             Assembly myAssembly = Assembly.GetExecutingAssembly();
             Stream myStream = myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Idle1.png");
             Bitmap bmp = new Bitmap(myStream);
@@ -574,6 +530,7 @@ namespace DesktopHelper
             Rectangle sourceRect = new Rectangle(0, 0, width, height);
 
             //Check if helper is disabled before drawing to the screen
+            //Select Current Animation Frame
             if (MainHelper.HelperEnable == true)
             {
                 position = new System.Drawing.Point(MainHelper.petx, MainHelper.pety);
@@ -590,10 +547,6 @@ namespace DesktopHelper
                 {
                     myStream = myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Idle3.png");
                 }
-                //else if (MainHelper.petAnimStage == 4)
-                //{
-                 //   myStream = myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Idle4.png");
-                //}
                 else if (MainHelper.petAnimStage == 5)
                 {
                     myStream = myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Left1.png");
@@ -635,27 +588,18 @@ namespace DesktopHelper
                     myStream = myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Right5.png");
                 }
 
-
-
-                //Debug.WriteLine(MainHelper.petAnimStage);
                 bmp = new Bitmap(myStream);
                 sourceImage = bmp;
-                //graphics.DrawImage(sourceImage, position.X, position.Y, sourceRect, GraphicsUnit.Pixel);
                 graphics.DrawImage(sourceImage, position.X, position.Y, 100, 100);
 
 
                 if (MainHelper.isbubble == true)
                 {
                     position = new System.Drawing.Point(MainHelper.bubblex, MainHelper.bubbley);
-                    //myStream = myAssembly.GetManifestResourceStream("DesktopHelper.HelperPrograms.Running.Resources.Image1.png");
-                    //bmp = new Bitmap(myStream);
-                    //sourceImage = bmp;
-                    //graphics.DrawImage(sourceImage, position.X, position.Y, sourceRect, GraphicsUnit.Pixel);
 
                     float padding = 4f;
                     float maxWidth = 300f;
                     float fixedBottomY = position.Y;
-                    //SizeF textSize = graphics.MeasureString(MainHelper.drawString, drawFont, (int)maxWidth);
 
                     StringFormat format = new StringFormat();
                     format.Alignment = StringAlignment.Near;
@@ -674,15 +618,12 @@ namespace DesktopHelper
                     graphics.DrawRectangle(Pens.White, rect.X, rect.Y, rect.Width, rect.Height);
 
                     RectangleF textRect = new RectangleF(position.X - 55, originY + padding, maxWidth, measuredSize.Height);
-
-                    //graphics.DrawString(MainHelper.drawString, drawFont, drawBrush, position.X + 55, position.Y + 70, drawFormat);
                     graphics.FillPolygon(System.Drawing.Brushes.LightGray, new System.Drawing.Point[] { new System.Drawing.Point(position.X + 200, position.Y + 0), new System.Drawing.Point(position.X + 100, position.Y + 0), new System.Drawing.Point(position.X + 200, position.Y + 40) });
                     graphics.DrawString(MainHelper.drawString, drawFont, drawBrush, textRect, format);
 
                     //Draw Border
                     bmp = new Bitmap(myAssembly.GetManifestResourceStream("DesktopTaskAid.HelperPrograms.Running.Resources.Border.png"));
                     sourceImage = bmp;
-                    //graphics.DrawImage(sourceImage, position.X, position.Y, sourceRect, GraphicsUnit.Pixel);
                     graphics.DrawImage(sourceImage, position.X-63, position.Y-36, 317, 83);
                 }
             }
