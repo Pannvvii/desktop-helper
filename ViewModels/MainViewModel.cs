@@ -674,7 +674,7 @@ namespace DesktopTaskAid.ViewModels
             }
             else
             {
-                EditingTask.ReminderLabel = "Not set";
+                EditingTask.ReminderLabel = "Disabled";
             }
 
             var existingTask = AllTasks.FirstOrDefault(t => t.Id == EditingTask.Id);

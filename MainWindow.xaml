@@ -843,7 +843,7 @@
                                   Height="44" Margin="0,0,0,16" FocusVisualStyle="{x:Null}">
                             <ComboBoxItem Content="Active" Tag="active"/>
                             <ComboBoxItem Content="Overdue" Tag="overdue"/>
-                            <ComboBoxItem Content="Not set" Tag="none" IsSelected="True"/>
+                            <ComboBoxItem Content="Disabled" Tag="none" IsSelected="True"/>
                         </ComboBox>
 
                         <Grid Margin="0,24,0,0">

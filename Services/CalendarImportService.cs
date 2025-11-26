@@ -291,7 +291,7 @@ namespace DesktopTaskAid.Services
                 DueDate = startInfo.Date,
                 DueTime = startInfo.Time,
                 ReminderStatus = "none",
-                ReminderLabel = "Not set",
+                ReminderLabel = "Disabled",
                 ExternalId = calendarEvent.Id
             };
 

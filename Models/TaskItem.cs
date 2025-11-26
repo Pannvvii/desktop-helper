@@ -18,7 +18,7 @@ namespace DesktopTaskAid.Models
             Id = Guid.NewGuid().ToString();
             CreatedAt = DateTime.Now;
             ReminderStatus = "none";
-            ReminderLabel = "Not set";
+            ReminderLabel = "Disabled";
         }
 
         public DateTime? GetFullDueDateTime()
