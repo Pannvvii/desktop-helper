@@ -263,25 +263,25 @@ namespace DesktopTaskAid.ViewModels
             set => SetProperty(ref _isOptionsMenuOpen, value);
         }
 
-        private bool _isDragWindowEnabled = true;
-        public bool IsDragWindowEnabled
+        private bool _isHelperToggle = true;
+        public bool IsHelperToggle
         {
-            get => _isDragWindowEnabled;
+            get => _isHelperToggle;
             set
             {
-                SetProperty(ref _isDragWindowEnabled, value);
-                MainHelper.DragWindowEnabled = value; // Sync with global helper setting
+                SetProperty(ref _isHelperToggle, value);
+                MainHelper.HelperToggle = value; // Sync with global helper setting
             }
         }
 
-        private bool _isPullMouseEnabled = true;
-        public bool IsPullMouseEnabled
+        private bool _isDemoToggle = true;
+        public bool IsDemoToggle
         {
-            get => _isPullMouseEnabled;
+            get => _isDemoToggle;
             set
             {
-                SetProperty(ref _isPullMouseEnabled, value);
-                MainHelper.PullMouseEnabled = value; // Sync with global helper setting
+                SetProperty(ref _isDemoToggle, value);
+                MainHelper.DemoToggle = value; // Sync with global helper setting
             }
         }
 

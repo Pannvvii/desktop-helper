@@ -687,7 +687,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     
-                    <CheckBox Grid.Column="0" IsChecked="{Binding IsDragWindowEnabled}" 
+                    <CheckBox Grid.Column="0" IsChecked="{Binding IsHelperToggle}" 
                               VerticalAlignment="Center" Margin="0,0,10,0"
                               FocusVisualStyle="{x:Null}" Cursor="Hand">
                         <CheckBox.Template>
@@ -710,7 +710,7 @@
                         </CheckBox.Template>
                     </CheckBox>
                     
-                    <TextBlock Grid.Column="1" Text="Drag Window" FontSize="14" 
+                    <TextBlock Grid.Column="1" Text="Helper Enabled" FontSize="14" 
                                Foreground="{DynamicResource TextPrimary}" VerticalAlignment="Center"/>
                 </Grid>
                 
@@ -721,7 +721,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     
-                    <CheckBox Grid.Column="0" IsChecked="{Binding IsPullMouseEnabled}" 
+                    <CheckBox Grid.Column="0" IsChecked="{Binding IsDemoToggle}" 
                               VerticalAlignment="Center" Margin="0,0,10,0"
                               FocusVisualStyle="{x:Null}" Cursor="Hand">
                         <CheckBox.Template>
@@ -744,7 +744,7 @@
                         </CheckBox.Template>
                     </CheckBox>
                     
-                    <TextBlock Grid.Column="1" Text="Pull mouse" FontSize="14" 
+                    <TextBlock Grid.Column="1" Text="Demo Mode" FontSize="14" 
                                Foreground="{DynamicResource TextPrimary}" VerticalAlignment="Center"/>
                 </Grid>
             </StackPanel>

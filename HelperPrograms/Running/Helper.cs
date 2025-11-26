@@ -34,6 +34,30 @@ namespace DesktopHelper
             TimeSpan spanLong = TimeSpan.FromHours(1);
             TimeSpan spanZero = TimeSpan.FromMinutes(0);
 
+            if (MainHelper.HelperToggle != false)
+            {
+                MainHelper.HelperEnable = true;
+            }
+            else
+            {
+                MainHelper.HelperEnable = false;
+            }
+
+            int movementchance = 30;
+
+            if (MainHelper.DemoToggle != false)
+            {
+                movementchance = 30;
+                MainHelper.notifIntervalSet = 20;
+            }
+            else
+            {
+                movementchance = 100;
+                MainHelper.notifIntervalSet = 100;
+            }
+
+            
+
 
             //Time for Pet update
             if (MainHelper.petTime != AppTime && MainHelper.HelperEnable == true && MainHelper.isClicked == false)
@@ -93,7 +117,7 @@ namespace DesktopHelper
                                     //Debug.WriteLine("Result: " + (currTaskDate.TimeOfDay - nowTruncated.TimeOfDay));
                                     //Debug.WriteLine("Compare to: " + spanZero);
 
-                                    if (justDueTime - nowTruncated <= spanZero)
+                                    if (currTask.IsOverdue())
                                     {
                                         if (!MainHelper.timeNotifQZero.Contains(currTask) && !MainHelper.timeNotifQZeroFinished.Contains(currTask))
                                         {
@@ -131,7 +155,7 @@ namespace DesktopHelper
                         {
 
                             reminderTextDay = reminderTextDay + notifTask.Name + ", ";
-                            
+
                         }
                         reminderTextDay = reminderTextDay.Remove(reminderTextDay.Length - 2);
                     }
@@ -150,7 +174,7 @@ namespace DesktopHelper
                     }
                     else
                     {
-                        reminderTextWeek = "No other tasks due this week.";
+                        reminderTextWeek = "You have no other tasks due this week.";
                     }
                     if (TaskLOverdue.Any())
                     {
@@ -166,7 +190,7 @@ namespace DesktopHelper
                 }
                 else if (MainViewModel._allTasks == null)
                 {
-                    MainHelper.drawString = "No Tasks!";
+                    MainHelper.drawString = "You have no tasks!";
                     MainHelper.isbubble = false;
                 }
 
@@ -196,18 +220,19 @@ namespace DesktopHelper
                 {
                     if (nextDueTask == null)
                     {
-                        if (!cuTask.IsOverdue()) 
-                        { 
+                        if (!cuTask.IsOverdue())
+                        {
                             nextDueTask = cuTask;
                         }
-                    } else if (nextDueTask != null)
+                    }
+                    else if (nextDueTask != null)
                     {
                         if (cuTask.DueDate < nextDueTask.DueDate)
                         {
                             nextDueTask = cuTask;
                         }
                     }
-                    
+
                 }
 
 
@@ -223,6 +248,7 @@ namespace DesktopHelper
                     MainHelper.petTime = AppTime;
                     Debug.WriteLine("Anim: " + MainHelper.petAnimStage);
                     Debug.WriteLine("NotifFlag: " + MainHelper.needNotifFlag);
+                    Debug.WriteLine("TimeNotifFlag: " + MainHelper.timeNotifActive);
                     //Debug.WriteLine("Notif Length: " + MainHelper.notifLength);
 
                     //Pet has just launched, start a special notification
@@ -267,9 +293,10 @@ namespace DesktopHelper
                                 if (nextDueTask != null)
                                 {
                                     MainHelper.drawString = "The next task you have coming up is " + nextDueTask.Name;
-                                }else
+                                }
+                                else
                                 {
-                                    MainHelper.drawString = "No tasks coming up! You're all clear!";
+                                    MainHelper.drawString = "There are no tasks coming up! You're all clear!";
                                 }
                             }
                             if (MainHelper.notifLength > 0)
@@ -328,7 +355,7 @@ namespace DesktopHelper
                                 MainHelper.isbubble = true;
                                 if (MainHelper.notifLength > 0)
                                 {
-                                    MainHelper.drawString = "Task Past Due: " + MainHelper.timeNotifQZero[0].Name;
+                                    MainHelper.drawString = "You have a task past due... It's this one: " + MainHelper.timeNotifQZero[0].Name;
                                 }
                                 if (MainHelper.notifLength > 0)
                                 {
@@ -353,7 +380,7 @@ namespace DesktopHelper
                                 MainHelper.isbubble = true;
                                 if (MainHelper.notifLength > 0)
                                 {
-                                    MainHelper.drawString = "Task due in 10 minutes: " + MainHelper.timeNotifQShort[0].Name;
+                                    MainHelper.drawString = "There's a task due in 10 minutes! It's this one: " + MainHelper.timeNotifQShort[0].Name;
                                 }
                                 if (MainHelper.notifLength > 0)
                                 {
@@ -378,7 +405,7 @@ namespace DesktopHelper
                                 MainHelper.isbubble = true;
                                 if (MainHelper.notifLength > 0)
                                 {
-                                    MainHelper.drawString = "Task due in an hour: " + MainHelper.timeNotifQLong[0].Name;
+                                    MainHelper.drawString = "There's a task due in an hour. Make sure you remember this one: " + MainHelper.timeNotifQLong[0].Name;
                                 }
                                 if (MainHelper.notifLength > 0)
                                 {
@@ -408,7 +435,7 @@ namespace DesktopHelper
                     if ((MainHelper.petStatus == "Idle") && (MainHelper.needNotifFlag == 1) && (MainHelper.congratulateActive == 0) && (MainHelper.timeNotifActive == 0))
                     {
                         int rndResult = 0;
-                        rndResult = MainHelper.rnd.Next(1, 30);
+                        rndResult = MainHelper.rnd.Next(1, movementchance);
                         //Debug.WriteLine("RandRes: " + rndResult);
                         if (rndResult == 6)
                         {

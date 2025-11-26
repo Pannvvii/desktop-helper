@@ -2,16 +2,16 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- Colors - Matching Figma Dark Mode -->
-    <SolidColorBrush x:Key="BgLight" Color="#1C1F2E"/>
-    <SolidColorBrush x:Key="Surface" Color="#2C2F3E"/>
+    <SolidColorBrush x:Key="BgLight" Color="#191919"/>
+    <SolidColorBrush x:Key="Surface" Color="#333333"/>
     <SolidColorBrush x:Key="Border" Color="#3C3F4E"/>
     <SolidColorBrush x:Key="Divider" Color="#4C4F5E"/>
     <SolidColorBrush x:Key="TextPrimary" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="TextSecondary" Color="#B4B4B4"/>
     <SolidColorBrush x:Key="TextMuted" Color="#8A8A8A"/>
-    <SolidColorBrush x:Key="Accent" Color="#A855F7"/>
-    <SolidColorBrush x:Key="AccentStrong" Color="#C757FF"/>
-    <SolidColorBrush x:Key="AccentSoft" Color="#3D2E5F"/>
+    <SolidColorBrush x:Key="Accent" Color="#956B6B"/>
+    <SolidColorBrush x:Key="AccentStrong" Color="#C68F8F"/>
+    <SolidColorBrush x:Key="AccentSoft" Color="#4C4C4C"/>
     <SolidColorBrush x:Key="IconStroke" Color="#FFFFFF"/>
     
     <!-- Reminder Status Colors -->
@@ -24,8 +24,8 @@
 
     <!-- Gradient Brush -->
     <LinearGradientBrush x:Key="ButtonGradient" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#C757FF" Offset="0"/>
-        <GradientStop Color="#A855F7" Offset="1"/>
+        <GradientStop Color="#C68F8F" Offset="0"/>
+        <GradientStop Color="#956B6B" Offset="1"/>
     </LinearGradientBrush>
 
     <!-- Window Button Style -->

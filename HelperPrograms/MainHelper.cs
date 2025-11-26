@@ -31,7 +31,7 @@ namespace DesktopHelper
         public static int congratulateActive = 0;
         public static int timeNotifActive = 0;
         public static int reminderInterval = 15;
-        public static int needNotifFlag = 0;
+        public static int needNotifFlag = 1;
         public static int notifLength = 50;
         public static bool isbubble = true;
         public static string drawString = "Hi!";
@@ -57,8 +57,8 @@ namespace DesktopHelper
         public static bool starButtonHover = false;
         public static bool moonButtonHover = false;
 
-        public static bool DragWindowEnabled = true;
-        public static bool PullMouseEnabled = true;
+        public static bool HelperToggle = true;
+        public static bool DemoToggle = true;
 
 
         public static int bubblex = widthWindow - 300;

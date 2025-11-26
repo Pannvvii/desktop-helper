@@ -87,7 +87,7 @@ namespace DesktopTaskAid
             var isDarkTheme = System.Windows.Application.Current.Resources.MergedDictionaries
                 .Any(d => d.Source?.ToString().Contains("darkTheme.xaml") == true);
             
-            string imageName = isDarkTheme ? "sticker-dark.png" : "sticker-light.png";
+            string imageName = isDarkTheme ? "Idle1.png" : "Idle2.png";
             
             try
             {
@@ -139,13 +139,13 @@ namespace DesktopTaskAid
                 : WindowState.Maximized;
         }
 
-        /*private void CloseWindow(object sender, RoutedEventArgs e)
+        private void CloseWindow(object sender, RoutedEventArgs e)
         {
             LoggingService.Log("CloseWindow clicked - Application shutting down");
             t.Join();
             this.Close();
 
-        }*/
+        }
 
         private void MainWindow_StateChanged(object sender, EventArgs e)
         {
