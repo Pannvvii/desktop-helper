@@ -14,6 +14,7 @@ namespace DesktopHelper
         public static Random rndsec = new Random();
         public static Random rndthird = new Random();
         public static Random rnd = new Random();
+        public static Random rndnot = new Random();
 
         public static int heightWindow = (System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height);
         public static int widthWindow = (int)Math.Floor(SystemParameters.FullPrimaryScreenWidth);
@@ -32,11 +33,12 @@ namespace DesktopHelper
         public static int timeNotifActive = 0;
         public static int reminderInterval = 15;
         public static int needNotifFlag = 1;
-        public static int notifLength = 50;
+        public static int notifDefaultLength = 35;
+        public static int notifLength = 35;
         public static bool isbubble = true;
         public static string drawString = "Hi!";
         public static bool isClicked = false;
-        public static int notifIntervalSet = 20;
+        public static int notifIntervalSet = 666;
         
 
 

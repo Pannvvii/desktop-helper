@@ -64,7 +64,7 @@ namespace DesktopHelper
                 var allTask = new List<TaskItem> { };
                 var storTask = new TaskItem { Name = "New Task", DueDate = null, ReminderStatus = "None" };
 
-                DateTime dateNow = DateTime.Now; // struct always non-null, redundant checks removed
+                DateTime dateNow = DateTime.Now; 
                 DateTime currTaskDate = DateTime.MinValue;
                 DateTime NextDue = DateTime.MinValue;
                 TimeSpan nowTruncated = TimeSpan.MinValue;
@@ -85,7 +85,7 @@ namespace DesktopHelper
                     foreach (var currTask in MainViewModel._allTasks)
                     {
                         allTask.Add(currTask);
-                        // Safe nullable checks; do not dereference DueTime.Value when null
+                        // Adding upcoming tasks to notification lists when remaining time reaches threshold
                         if (currTask.DueDate.HasValue && !string.IsNullOrWhiteSpace(currTask.Name) && currTask.DueTime.HasValue)
                         {
                             currTaskDate = currTask.DueDate.Value.Date;
@@ -149,7 +149,6 @@ namespace DesktopHelper
                         }
                         else if (currTask.DueDate.HasValue && !string.IsNullOrWhiteSpace(currTask.Name) && !currTask.DueTime.HasValue)
                         {
-                            // Optional: treat tasks with date but no time (all-day tasks) for day/week lists
                             if (string.Equals(currTask.ReminderStatus, "active", StringComparison.OrdinalIgnoreCase))
                             {
                                 var dateOnly = currTask.DueDate.Value.Date;
@@ -205,9 +204,6 @@ namespace DesktopHelper
                         }
                         reminderTextOverdue = reminderTextOverdue.Remove(reminderTextOverdue.Length - 2);
                     }
-
-
-
                 }
                 else if (MainViewModel._allTasks == null)
                 {
@@ -215,7 +211,7 @@ namespace DesktopHelper
                     MainHelper.isbubble = false;
                 }
 
-
+                //determine if a task has been deleted and flag a congratulation
                 if (MainHelper.oldList.Count > allTask.Count && MainHelper.oldList.Count != 0)
                 {
                     MainHelper.congratulateFlag = 1;
@@ -230,7 +226,7 @@ namespace DesktopHelper
                 var nextDueTask = new TaskItem();
                 nextDueTask = null;
 
-
+                //grab the task closest to being due
                 foreach (var cuTask in allTask)
                 {
                     if (nextDueTask == null)
@@ -288,22 +284,35 @@ namespace DesktopHelper
                             MainHelper.notifLength = 50;
                         }
                     }
-                    //Pet is idle and notification flag is active
-                    else if (MainHelper.needNotifFlag == 2 && MainHelper.petStatus == "Idle" && MainHelper.congratulateActive == 0 /*&& MainHelper.timeNotifActive == 0*/)
+
+
+
+
+                    //Pet is idle and notification flag is active, activate every 10 minutes notification
+                    else if (MainHelper.needNotifFlag == 2 && MainHelper.petStatus == "Idle" /*&& MainHelper.congratulateActive == 0 && MainHelper.timeNotifActive == 0*/)
                     {
-                        //Grab attention notification
+                        //event if no tasks, attention grabbing event if tasks upcoming
                         if (MainHelper.notifLength != 0)
                         {
+
+                            /*if (MainHelper.notifLength == MainHelper.notifDefaultLength)
+                            {
+                                Future randomizing code for more events
+                                int rndnotres = 1;
+                                rndnotres = MainHelper.rndnot.Next(1, 3);
+                            }*/
+
                             MainHelper.isbubble = true;
                             if (MainHelper.notifLength > 0)
                             {
-                                if (nextDueTask != null)
+                                if (nextDueTask != null && (TaskLWeek.Any() || TaskLToday.Any()))
                                 {
                                     MainHelper.drawString = "The next task you have coming up is " + nextDueTask.Name;
                                 }
                                 else
                                 {
-                                    MainHelper.drawString = "There are no tasks coming up! You're all clear!";
+                                    MainHelper.isbubble = false;
+                                    //MainHelper.drawString = "There are no tasks coming up! You're all clear!";
                                 }
                             }
                             if (MainHelper.notifLength > 0)
@@ -322,11 +331,15 @@ namespace DesktopHelper
                         else if (MainHelper.notifLength == 0)
                         {
                             MainHelper.needNotifFlag = 1;
-                            MainHelper.notifLength = 25;
+                            MainHelper.notifLength = MainHelper.notifDefaultLength;
                         }
                     }
+
+
+
+
                     //Notification is not active and Task complete congratulate is flagged
-                    else if (MainHelper.needNotifFlag == 1 && MainHelper.congratulateFlag == 1 && MainHelper.timeNotifActive == 0)
+                    else if (MainHelper.needNotifFlag == 1 && MainHelper.congratulateFlag == 1 /*&& MainHelper.timeNotifActive == 0*/)
                     {
                         //Grab attention notification
                         MainHelper.congratulateActive = 1;
@@ -345,7 +358,7 @@ namespace DesktopHelper
                         else if (MainHelper.notifLength == 0)
                         {
                             MainHelper.congratulateFlag = 0;
-                            MainHelper.notifLength = 25;
+                            MainHelper.notifLength = MainHelper.notifDefaultLength;
                             MainHelper.congratulateActive = 0;
                         }
                     }
@@ -372,7 +385,7 @@ namespace DesktopHelper
                             else if (MainHelper.notifLength == 0)
                             {
                                 MainHelper.timeNotifActive = 0;
-                                MainHelper.notifLength = 25;
+                                MainHelper.notifLength = MainHelper.notifDefaultLength;
                                 MainHelper.timeNotifQZeroFinished.Add(MainHelper.timeNotifQZero[0]);
                                 MainHelper.timeNotifQZero.RemoveAt(0);
                             }
@@ -397,7 +410,7 @@ namespace DesktopHelper
                             else if (MainHelper.notifLength == 0)
                             {
                                 MainHelper.timeNotifActive = 0;
-                                MainHelper.notifLength = 25;
+                                MainHelper.notifLength = MainHelper.notifDefaultLength;
                                 MainHelper.timeNotifQShortFinished.Add(MainHelper.timeNotifQShort[0]);
                                 MainHelper.timeNotifQShort.RemoveAt(0);
                             }
@@ -422,13 +435,13 @@ namespace DesktopHelper
                             else if (MainHelper.notifLength == 0)
                             {
                                 MainHelper.timeNotifActive = 0;
-                                MainHelper.notifLength = 25;
+                                MainHelper.notifLength = MainHelper.notifDefaultLength;
                                 MainHelper.timeNotifQLongFinished.Add(MainHelper.timeNotifQLong[0]);
                                 MainHelper.timeNotifQLong.RemoveAt(0);
                             }
                         }
                     }
-                    //No notif, check if the notification inverval has passed.
+                    //No notif, check if the notification inverval has passed, set flag if so
                     else if (MainHelper.needNotifFlag == 1)
                     {
                         MainHelper.isbubble = false;
@@ -474,7 +487,7 @@ namespace DesktopHelper
                             }
                         }
                     }
-                    //Pet if moving will finish movement of given length before anything else
+                    //Pet finishes movement if already started
                     else if (MainHelper.petStatus == "Moving")
                     {
                         if (MainHelper.petMoveDirection == 1)
