@@ -72,7 +72,7 @@
                                 
                                 <!-- Upcoming Info -->
                                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding UpcomingTask.Name, FallbackValue='Upcoming task name'}" 
+                                    <TextBlock Text="{Binding UpcomingTask.Name, FallbackValue='No Upcoming Tasks'}" 
                                                FontSize="18" FontWeight="Medium" Foreground="{DynamicResource TextPrimary}"/>
                                     <TextBlock Margin="0,4,0,0" FontSize="12" Foreground="{DynamicResource TextSecondary}">
                                         <Run Text="{Binding DoneTodaySeconds, Converter={StaticResource SecondsToDurationConverter}}"/>

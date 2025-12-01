@@ -12,8 +12,8 @@ namespace DesktopTaskAid.Models
 
         public TimerState()
         {
-            DurationSeconds = 25 * 60; // 25 minutes
-            RemainingSeconds = 25 * 60;
+            DurationSeconds = 60 * 60; // 60 minutes
+            RemainingSeconds = 60 * 60;
             IsRunning = false;
             DoneTodaySeconds = 0;
             DoneTodayDate = DateTime.Today;

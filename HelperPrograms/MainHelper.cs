@@ -59,7 +59,7 @@ namespace DesktopHelper
         public static bool moonButtonHover = false;
 
         public static bool HelperToggle = true;
-        public static bool DemoToggle = true;
+        public static bool DemoToggle = false;
         public static bool FocusToggle = false;
 
 

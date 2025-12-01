@@ -274,7 +274,7 @@ namespace DesktopTaskAid.ViewModels
             }
         }
 
-        private bool _isDemoToggle = true;
+        private bool _isDemoToggle = false;
         public bool IsDemoToggle
         {
             get => _isDemoToggle;

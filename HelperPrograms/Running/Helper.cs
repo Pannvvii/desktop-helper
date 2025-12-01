@@ -44,15 +44,15 @@ namespace DesktopHelper
 
             int movementchance = 30;
 
-            if (MainHelper.DemoToggle != false)
+            if (MainHelper.DemoToggle == true)
             {
                 movementchance = 30;
                 MainHelper.notifIntervalSet = 20;
             }
             else
             {
-                movementchance = 100;
-                MainHelper.notifIntervalSet = 100;
+                movementchance = 80;
+                MainHelper.notifIntervalSet = 666;
             }
 
             //Time for Pet update
@@ -74,6 +74,9 @@ namespace DesktopHelper
                 string reminderTextDay = "You Have the following tasks due today: ";
                 string reminderTextWeek = "You Have the following tasks due this week: ";
                 string reminderTextOverdue = "You Have the following tasks overdue (Maybe you forgot to delete?): ";
+
+                var hourSpan = new TimeSpan(1, 0, 0);
+                var daySpan = new TimeSpan(24, 0, 0);
 
                 //Upcoming task list population and closest to due task determination
 
@@ -119,7 +122,24 @@ namespace DesktopHelper
                                             MainHelper.timeNotifQLong.Add(currTask);
                                         }
                                     }
-
+                                }
+                                else if ((dateNow.Subtract(currTaskDate).TotalDays <= 1) && justDueTime <= spanLong)
+                                {
+                                    
+                                    if (justDueTime + (nowTruncated - daySpan) <= spanShort)
+                                    {
+                                        if (!MainHelper.timeNotifQShort.Contains(currTask) && !MainHelper.timeNotifQShortFinished.Contains(currTask))
+                                        {
+                                            MainHelper.timeNotifQShort.Add(currTask);
+                                        }
+                                    }
+                                    else if (justDueTime + (nowTruncated - daySpan) <= spanLong)
+                                    {
+                                        if (!MainHelper.timeNotifQLong.Contains(currTask) && !MainHelper.timeNotifQLongFinished.Contains(currTask))
+                                        {
+                                            MainHelper.timeNotifQLong.Add(currTask);
+                                        }
+                                    }
                                 }
                                 else if ((dateNow.Subtract(currTaskDate).TotalDays <= 7) && (currTask.DueDate >= DateTime.Now))
                                 {
