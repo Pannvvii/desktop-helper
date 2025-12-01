@@ -227,7 +227,6 @@ namespace DesktopHelper
                             nextDueTask = cuTask;
                         }
                     }
-
                 }
 
 
@@ -270,7 +269,7 @@ namespace DesktopHelper
                         }
                     }
                     //Pet is idle and notification flag is active
-                    else if (MainHelper.needNotifFlag == 2 && MainHelper.petStatus == "Idle" && MainHelper.congratulateActive == 0 && MainHelper.timeNotifActive == 0)
+                    else if (MainHelper.needNotifFlag == 2 && MainHelper.petStatus == "Idle" && MainHelper.congratulateActive == 0 /*&& MainHelper.timeNotifActive == 0*/)
                     {
                         //Grab attention notification
                         if (MainHelper.notifLength != 0)
