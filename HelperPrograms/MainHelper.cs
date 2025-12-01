@@ -37,6 +37,7 @@ namespace DesktopHelper
         public static string drawString = "Hi!";
         public static bool isClicked = false;
         public static int notifIntervalSet = 20;
+        
 
 
         public static bool HelperEnable = true; // Global enable variable for the helper to be turned on and off
@@ -59,6 +60,7 @@ namespace DesktopHelper
 
         public static bool HelperToggle = true;
         public static bool DemoToggle = true;
+        public static bool FocusToggle = false;
 
 
         public static int bubblex = widthWindow - 300;

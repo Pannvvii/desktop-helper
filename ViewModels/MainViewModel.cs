@@ -461,10 +461,12 @@ namespace DesktopTaskAid.ViewModels
             if (TimerRunning)
             {
                 _timerTick.Start();
+                MainHelper.FocusToggle = true;
             }
             else
             {
                 _timerTick.Stop();
+                MainHelper.FocusToggle = false;
             }
 
             _state.Timer.IsRunning = TimerRunning;

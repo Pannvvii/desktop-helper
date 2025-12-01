@@ -606,7 +606,7 @@ namespace DesktopHelper
                 graphics.DrawImage(sourceImage, position.X, position.Y, 100, 100);
 
 
-                if (MainHelper.isbubble == true)
+                if (MainHelper.isbubble == true && MainHelper.FocusToggle == false)
                 {
                     position = new System.Drawing.Point(MainHelper.bubblex, MainHelper.bubbley);
 

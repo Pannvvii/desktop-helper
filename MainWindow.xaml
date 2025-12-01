@@ -502,7 +502,7 @@
 
                             <!-- Pagination -->
                             <Border Grid.Row="1" Background="{DynamicResource Surface}" BorderBrush="{DynamicResource Divider}" 
-                                    BorderThickness="0,1,0,0" Padding="24,16">
+                                    BorderThickness="0,1,0,0" Padding="24,16" CornerRadius="0,0,16,16">
                                 <Grid>
                                     <TextBlock Text="{Binding PaginationText}" FontSize="12" Foreground="{DynamicResource TextSecondary}" 
                                                FontWeight="Medium" VerticalAlignment="Center"/>
@@ -663,7 +663,7 @@
                     </Button.Style>
                     <Viewbox Width="20" Height="20">
                         <Canvas Width="24" Height="24">
-                            <Path Data="M12 2l2.4 7.4h7.6l-6 4.6 2.3 7-6.3-4.6-6.3 4.6 2.3-7-6-4.6h7.6z" 
+                            <Path Data="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.07-.94l2.03-1.58a.5.5 0 0 0 .11-.64l-1.92-3.32a.5.5 0 0 0-.61-.22l-2.39.96a7.027 7.027 0 0 0-1.62-.94l-.36-2.54A.5.5 0 0 0 14.3 2h-4.6a.5.5 0 0 0-.49.42l-.36 2.54c-.59.23-1.13.54-1.63.94l-2.39-.96a.5.5 0 0 0-.61.22L2.3 8.68a.5.5 0 0 0 .11.64l2.03 1.58c-.05.31-.07.64-.07.97s.02.65.07.96L2.41 14.4a.5.5 0 0 0-.11.64l1.92 3.32c.14.24.43.34.69.24l2.39-.97c.5.4 1.05.73 1.63.96l.36 2.54c.05.25.26.42.49.42h4.6c.24 0 .45-.17.49-.42l.36-2.54c.58-.23 1.12-.55 1.62-.95l2.39.97c.26.1.55 0 .69-.24l1.92-3.32a.5.5 0 0 0-.11-.64l-2.03-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z" 
                                   Fill="{DynamicResource TextPrimary}"/>
                         </Canvas>
                     </Viewbox>
