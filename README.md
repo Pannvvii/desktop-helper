@@ -25,7 +25,7 @@ Interactive desktop element capable of referencing task list<br>
 UI capable of adding removing, and editing tasks<br>
 Integration with either google calendar (ideal) or windows integrated calendar (fallback) capable of automatically populating the task list<br>
 
-# Expected/Anticipated Architecture
+# Architecture
 C# .Net<br>
 WPF<br>
 JSON<br>
