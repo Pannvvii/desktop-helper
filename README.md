@@ -39,8 +39,8 @@ Visual issues stemming from a variety of potential user setups may arise. Variou
 Users task data privacy is an issue that must be considered. <br>
 All media, designs and code must not breach and avoid infringement.<br>
 
-# First Release Plans
-The first release will include a storage system for the task list and a placeholder desktop image that is capable of very basic changes based on the contents of the task list. <br>
+# Version 1.0
+This is the first official release version for the desktop helper. <br>
 
 # Tool Setup
 Github version control<br>
