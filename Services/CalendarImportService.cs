@@ -438,13 +438,13 @@ namespace DesktopTaskAid.Services
                     });
 
                     var now = DateTime.Now;
-                    var nextMonthStart = new DateTime(now.Year, now.Month, 1, 0, 0, 0, DateTimeKind.Local).AddMonths(1);
-                    var nextMonthEnd = nextMonthStart.AddMonths(1);
-                    LoggingService.Log($"Event query range: {nextMonthStart:u} to {nextMonthEnd:u}");
+                    var rangeStart = now;
+                    var rangeEnd = now.AddDays(31);
+                    LoggingService.Log($"Event query range: {rangeStart:u} to {rangeEnd:u}");
 
                     var request = service.Events.List("primary");
-                    request.TimeMinDateTimeOffset = nextMonthStart;
-                    request.TimeMaxDateTimeOffset = nextMonthEnd;
+                    request.TimeMinDateTimeOffset = rangeStart;
+                    request.TimeMaxDateTimeOffset = rangeEnd;
                     request.SingleEvents = true;
                     request.ShowDeleted = false;
                     request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
@@ -477,7 +477,7 @@ namespace DesktopTaskAid.Services
 
                     if (events.Count == 0)
                     {
-                        return new CalendarImportResult { Outcome = CalendarImportOutcome.NoEvents, ErrorMessage = "No events found for next month." };
+                        return new CalendarImportResult { Outcome = CalendarImportOutcome.NoEvents, ErrorMessage = "No events found in the next 31 days." };
                     }
 
                     var tasks = events.Select(ConvertToTaskItem).Where(t => t != null).ToList();
